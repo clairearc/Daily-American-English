@@ -1,10 +1,10 @@
 (() => {
   const IMG_BASE = 'assets/chapter-1/unit-1/part-1/';
   const MEDIA = {
-    hero: {src: IMG_BASE+'hero.webp', alt:'清晨起床情景教学图', legend:[['alarm / alarm clock','闹钟'],['wake up','醒来'],['stretch','伸展；伸懒腰']]},
-    'The Alarm Goes Off': {src: IMG_BASE+'scene-alarm-snooze.webp', alt:'闹钟响起与按贪睡按钮的教学图', legend:[['go off','（闹钟）响'],['snooze button','贪睡按钮'],['hit the snooze button','按下贪睡按钮']]},
-    'I Overslept': {src: IMG_BASE+'scene-overslept.webp', alt:'睡过头后慌忙起床的教学图', legend:[['oversleep','睡过头'],['panic','惊慌'],['in a rush','赶时间；匆忙']]},
-    'Looking Rough in the Morning': {src: IMG_BASE+'scene-puffy-eyes.webp', alt:'镜前观察浮肿眼睛和黑眼圈的教学图', legend:[['puffy eyes','浮肿的眼睛'],['dark circles','黑眼圈'],['drowsy','昏昏欲睡的']]}
+    hero: {src: IMG_BASE+'hero-v3.webp', alt:'清晨起床情景教学图', legend:[['alarm / alarm clock','闹钟'],['wake up','醒来'],['stretch','伸展；伸懒腰']]},
+    'The Alarm Goes Off': {src: IMG_BASE+'scene-alarm-snooze-v3.webp', alt:'闹钟响起与按贪睡按钮的教学图', legend:[['go off','（闹钟）响'],['snooze button','贪睡按钮'],['hit the snooze button','按下贪睡按钮']]},
+    'I Overslept': {src: IMG_BASE+'scene-overslept-v3.webp', alt:'睡过头后慌忙起床的教学图', legend:[['oversleep','睡过头'],['panic','惊慌'],['in a rush','赶时间；匆忙']]},
+    'Looking Rough in the Morning': {src: IMG_BASE+'scene-puffy-eyes-v3.webp', alt:'镜前观察浮肿眼睛和黑眼圈的教学图', legend:[['puffy eyes','浮肿的眼睛'],['dark circles','黑眼圈'],['drowsy','昏昏欲睡的']]}
   };
 
   // HeyGen Starfish · Adam Stone · male · American English
@@ -27,86 +27,38 @@
   const player = new Audio();
   player.preload='metadata';
   let stopAt=null, activeButton=null;
-  function clearButton(){ if(activeButton){activeButton.classList.remove('playing');activeButton.setAttribute('aria-pressed','false');} activeButton=null; }
-  function stopAudio(reset=true){ player.pause(); if(reset){try{player.currentTime=0;}catch(_){}} stopAt=null; clearButton(); }
-  function playUrl(url,button){
-    if(activeButton===button && !player.paused){stopAudio();return;}
-    stopAudio(false); activeButton=button; button.classList.add('playing'); button.setAttribute('aria-pressed','true'); stopAt=null;
-    const start=()=>player.play().catch(()=>{button.classList.add('audio-error');clearButton();});
-    if(player.src!==url){player.src=url;player.load();}
-    if(player.readyState>=1) start(); else player.addEventListener('loadedmetadata',start,{once:true});
-  }
-  function playSegment(url,start,end,button){
-    if(activeButton===button && !player.paused){stopAudio();return;}
-    stopAudio(false); activeButton=button; button.classList.add('playing'); button.setAttribute('aria-pressed','true'); stopAt=end+.06;
-    const go=()=>{try{player.currentTime=Math.max(0,start-.03);player.play().catch(()=>{button.classList.add('audio-error');clearButton();});}catch(_){clearButton();}};
-    if(player.src!==url){player.src=url;player.load();}
-    if(player.readyState>=1) go(); else player.addEventListener('loadedmetadata',go,{once:true});
-  }
-  player.addEventListener('timeupdate',()=>{if(stopAt!==null && player.currentTime>=stopAt) stopAudio();});
+  function clearButton(){if(activeButton){activeButton.classList.remove('playing');activeButton.setAttribute('aria-pressed','false');}activeButton=null;}
+  function stopAudio(reset=true){player.pause();if(reset){try{player.currentTime=0;}catch(_){}}stopAt=null;clearButton();}
+  function playUrl(url,button){if(activeButton===button&&!player.paused){stopAudio();return;}stopAudio(false);activeButton=button;button.classList.add('playing');button.setAttribute('aria-pressed','true');stopAt=null;const start=()=>player.play().catch(()=>{button.classList.add('audio-error');clearButton();});if(player.src!==url){player.src=url;player.load();}if(player.readyState>=1)start();else player.addEventListener('loadedmetadata',start,{once:true});}
+  function playSegment(url,start,end,button){if(activeButton===button&&!player.paused){stopAudio();return;}stopAudio(false);activeButton=button;button.classList.add('playing');button.setAttribute('aria-pressed','true');stopAt=end+.06;const go=()=>{try{player.currentTime=Math.max(0,start-.03);player.play().catch(()=>{button.classList.add('audio-error');clearButton();});}catch(_){clearButton();}};if(player.src!==url){player.src=url;player.load();}if(player.readyState>=1)go();else player.addEventListener('loadedmetadata',go,{once:true});}
+  player.addEventListener('timeupdate',()=>{if(stopAt!==null&&player.currentTime>=stopAt)stopAudio();});
   player.addEventListener('ended',()=>stopAudio());
-  player.addEventListener('error',()=>{ if(activeButton){activeButton.classList.add('audio-error');activeButton.title='音频加载失败，请刷新后重试';} clearButton(); });
+  player.addEventListener('error',()=>{if(activeButton){activeButton.classList.add('audio-error');activeButton.title='音频加载失败，请刷新后重试';}clearButton();});
 
-  function audioButton(handler,label='播放 Adam Stone 美式男声',full=false){
-    const b=document.createElement('button'); b.type='button'; b.className='us-speak'+(full?' us-scene-play':'');
-    b.innerHTML=full?'▶ 播放整段 · US 男声':'🔊 <span>US</span>'; b.setAttribute('aria-label',label); b.title=label;
-    b.addEventListener('click',e=>{e.stopPropagation();handler(b);}); return b;
-  }
-
+  function audioButton(handler,label='播放 Adam Stone 美式男声',full=false){const b=document.createElement('button');b.type='button';b.className='us-speak'+(full?' us-scene-play':'');b.innerHTML=full?'▶ 播放整段 · US 男声':'🔊 <span>US</span>';b.setAttribute('aria-label',label);b.title=label;b.addEventListener('click',e=>{e.stopPropagation();handler(b);});return b;}
   function findVocabButton(term){return [...document.querySelectorAll('.vocab-card')].find(c=>c.querySelector('.vocab-term')?.textContent.trim()===term)?.querySelector('.vocab-audio-btn')||null;}
-  function legend(items){
-    const box=document.createElement('div'); box.className='v2-legend';
-    const title=document.createElement('div'); title.className='v2-legend-title'; title.textContent='看图学表达'; box.appendChild(title);
-    const grid=document.createElement('div'); grid.className='v2-legend-grid';
-    items.forEach((x,i)=>{
-      const row=document.createElement('div'); row.className='v2-legend-item';
-      row.innerHTML=`<span class="v2-num">${i+1}</span><span class="v2-copy"><strong>${x[0]}</strong><small>${x[1]}</small></span>`;
-      const vb=findVocabButton(x[0]);
-      if(vb){const b=audioButton(()=>vb.click(),`播放 ${x[0]} 的 Adam Stone 美式男声`);row.appendChild(b);}
-      grid.appendChild(row);
-    }); box.appendChild(grid); return box;
-  }
+  function legend(items){const box=document.createElement('div');box.className='v2-legend';const title=document.createElement('div');title.className='v2-legend-title';title.textContent='看图学表达';box.appendChild(title);const grid=document.createElement('div');grid.className='v2-legend-grid';items.forEach((x,i)=>{const row=document.createElement('div');row.className='v2-legend-item';row.innerHTML=`<span class="v2-num">${i+1}</span><span class="v2-copy"><strong>${x[0]}</strong><small>${x[1]}</small></span>`;const vb=findVocabButton(x[0]);if(vb){const b=audioButton(()=>vb.click(),`播放 ${x[0]} 的 Adam Stone 美式男声`);row.appendChild(b);}grid.appendChild(row);});box.appendChild(grid);return box;}
 
   function mediaFigure(cfg,hero=false){
-    const wrap=document.createElement('div'); wrap.className=hero?'v2-media v2-hero':'v2-media v2-scene-media';
-    const stage=document.createElement('div'); stage.className='v2-image-stage v2-image-loading';
-    const img=document.createElement('img'); img.src=cfg.src+'?v=20260911h'; img.alt=cfg.alt; img.decoding='async'; img.loading=hero?'eager':'lazy';
-    img.addEventListener('error',()=>wrap.remove());
+    const wrap=document.createElement('div');
+    wrap.className=hero?'v2-media v2-hero':'v2-media v2-scene-media';
+    wrap.hidden=true;
+    const stage=document.createElement('div');stage.className='v2-image-stage';
+    const img=document.createElement('img');img.src=cfg.src+'?v=20260911-v3';img.alt=cfg.alt;img.decoding='async';img.loading=hero?'eager':'lazy';
+    img.addEventListener('error',()=>wrap.remove(),{once:true});
     img.addEventListener('load',()=>{
-      if(img.naturalWidth<400 || img.naturalHeight<250){wrap.remove();return;}
-      stage.classList.remove('v2-image-loading');
       cfg.legend.forEach((_,i)=>{const m=document.createElement('span');m.className='v2-marker v2-marker-'+(i+1);m.textContent=String(i+1);stage.appendChild(m);});
       wrap.appendChild(legend(cfg.legend));
+      wrap.hidden=false;
     },{once:true});
-    stage.appendChild(img); wrap.appendChild(stage); return wrap;
+    stage.appendChild(img);wrap.appendChild(stage);return wrap;
   }
   function cleanLegacyMedia(){document.querySelectorAll('.part-hero-media,.scene-illustration,.teaching-visual,.hotfix-media,.hotfix-legend,.teaching-legend').forEach(x=>x.remove());}
-  function addMedia(){
-    const part=document.querySelector('.course-part'); if(!part) return;
-    const title=part.querySelector('.part-header h2')?.textContent||''; if(!title.includes('Waking Up & Being Late')) return;
-    cleanLegacyMedia(); const header=part.querySelector('.part-header');
-    if(header&&!header.querySelector('.v2-hero')){const f=mediaFigure(MEDIA.hero,true),obj=header.querySelector('.objectives');obj?obj.insertAdjacentElement('beforebegin',f):header.appendChild(f);}
-    document.querySelectorAll('#scenes .scene-card').forEach(card=>{const t=card.querySelector('.scene-head h4')?.textContent?.trim(),cfg=MEDIA[t];if(!cfg||card.querySelector('.v2-scene-media'))return;card.querySelector('.scene-head')?.insertAdjacentElement('afterend',mediaFigure(cfg,false));});
-  }
+  function addMedia(){const part=document.querySelector('.course-part');if(!part)return;const title=part.querySelector('.part-header h2')?.textContent||'';if(!title.includes('Waking Up & Being Late'))return;cleanLegacyMedia();const header=part.querySelector('.part-header');if(header&&!header.querySelector('.v2-hero')){const f=mediaFigure(MEDIA.hero,true),obj=header.querySelector('.objectives');obj?obj.insertAdjacentElement('beforebegin',f):header.appendChild(f);}document.querySelectorAll('#scenes .scene-card').forEach(card=>{const t=card.querySelector('.scene-head h4')?.textContent?.trim(),cfg=MEDIA[t];if(!cfg||card.querySelector('.v2-scene-media'))return;card.querySelector('.scene-head')?.insertAdjacentElement('afterend',mediaFigure(cfg,false));});}
 
-  function fixSceneAudio(){
-    document.querySelectorAll('#scenes .scene-card').forEach(card=>{
-      const title=card.querySelector('.scene-head h4')?.textContent?.trim(),url=SCENE_AUDIO[title]; if(!url)return;
-      let box=card.querySelector('.scene-audio'); if(!box){box=document.createElement('div');box.className='scene-audio';card.querySelector('.dialogue')?.insertAdjacentElement('beforebegin',box);}
-      if(box.dataset.adam==='1')return; box.dataset.adam='1'; box.innerHTML='<span>🎧 对话音频 · Adam Stone 美式男声</span>';
-      box.appendChild(audioButton(b=>playUrl(url,b),'播放整段 Adam Stone 美式男声',true));
-      const tip=document.createElement('small');tip.textContent='HeyGen Starfish · 正常语速';box.appendChild(tip);
-    });
-  }
-
+  function fixSceneAudio(){document.querySelectorAll('#scenes .scene-card').forEach(card=>{const title=card.querySelector('.scene-head h4')?.textContent?.trim(),url=SCENE_AUDIO[title];if(!url)return;let box=card.querySelector('.scene-audio');if(!box){box=document.createElement('div');box.className='scene-audio';card.querySelector('.dialogue')?.insertAdjacentElement('beforebegin',box);}if(box.dataset.adam==='1')return;box.dataset.adam='1';box.innerHTML='<span>🎧 对话音频 · Adam Stone 美式男声</span>';box.appendChild(audioButton(b=>playUrl(url,b),'播放整段 Adam Stone 美式男声',true));const tip=document.createElement('small');tip.textContent='HeyGen Starfish · 正常语速';box.appendChild(tip);});}
   function attachSegment(node,url,segment){if(!node||!segment||node.dataset.adamAudio==='1')return;node.dataset.adamAudio='1';node.classList.add('v2-audio-line');node.appendChild(audioButton(b=>playSegment(url,segment[0],segment[1],b)));}
-  function addSectionAudio(){
-    document.querySelectorAll('#expressions .expression-card h4,#expressions .alternatives .en').forEach((n,i)=>attachSegment(n,EXPRESSION_AUDIO.url,EXPRESSION_AUDIO.segments[i]));
-    document.querySelectorAll('#comparisons .compare-row strong').forEach((n,i)=>attachSegment(n,COMPARISON_AUDIO.url,COMPARISON_AUDIO.segments[i]));
-    document.querySelectorAll('#useful-lines .line-card .en').forEach((n,i)=>{const a=i<7?USEFUL_AUDIO[0]:USEFUL_AUDIO[1],seg=i<7?a.segments[i]:a.segments[i-7];attachSegment(n,a.url,seg);});
-    document.querySelectorAll('#practice .prompt-box .en').forEach((n,i)=>attachSegment(n,PRACTICE_AUDIO.url,PRACTICE_AUDIO.segments[i]));
-    document.querySelectorAll('#practice .rewrite .better').forEach((n,i)=>attachSegment(n,PRACTICE_AUDIO.url,PRACTICE_AUDIO.segments[i+2]));
-  }
+  function addSectionAudio(){document.querySelectorAll('#expressions .expression-card h4,#expressions .alternatives .en').forEach((n,i)=>attachSegment(n,EXPRESSION_AUDIO.url,EXPRESSION_AUDIO.segments[i]));document.querySelectorAll('#comparisons .compare-row strong').forEach((n,i)=>attachSegment(n,COMPARISON_AUDIO.url,COMPARISON_AUDIO.segments[i]));document.querySelectorAll('#useful-lines .line-card .en').forEach((n,i)=>{const a=i<7?USEFUL_AUDIO[0]:USEFUL_AUDIO[1],seg=i<7?a.segments[i]:a.segments[i-7];attachSegment(n,a.url,seg);});document.querySelectorAll('#practice .prompt-box .en').forEach((n,i)=>attachSegment(n,PRACTICE_AUDIO.url,PRACTICE_AUDIO.segments[i]));document.querySelectorAll('#practice .rewrite .better').forEach((n,i)=>attachSegment(n,PRACTICE_AUDIO.url,PRACTICE_AUDIO.segments[i+2]));}
 
   function run(){addMedia();fixSceneAudio();addSectionAudio();}
   const app=document.querySelector('#app');if(!app)return;
