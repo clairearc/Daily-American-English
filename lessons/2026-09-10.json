@@ -1,23 +1,30 @@
 {
   "date": "2026-09-10",
-  "title": "A Package Delivered by Mistake",
-  "setting": "A neighbor's package was delivered to your door, so you bring it over.",
+  "title": "邻居收到你的快递 · A Package Delivered by Mistake",
+  "setting": "你住在公寓里，快递员把邻居的包裹送到了你家门口。你拿着包裹去敲邻居的门。这种简短、友好的邻里交流在美国生活中很常见。",
   "audio": "https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=fd9b3a32-3b9a-49c9-a0e4-673824ded98f.wav",
   "dialogue": [
-    {"speaker":"A","en":"Hey, sorry to bother you, but I think this package was delivered to me by mistake.","zh":"嗨，不好意思打扰你，我想这个包裹可能是误送到我这里了。"},
-    {"speaker":"B","en":"Oh, really? Let me check the name on it.","zh":"哦，是吗？我看看上面的名字。"},
-    {"speaker":"A","en":"Yeah, it looks like it's yours. I figured I'd bring it over before I forgot.","zh":"对，看起来是你的。我想着趁没忘记，直接给你送过来。"},
-    {"speaker":"B","en":"Thanks, I appreciate it. I've been waiting for this all week.","zh":"谢谢，真的很感谢。我等这个包裹已经等了一整个星期了。"},
-    {"speaker":"A","en":"No worries. I almost opened it before I noticed the address.","zh":"没事。我差点就打开了，后来才注意到上面的地址。"},
-    {"speaker":"B","en":"Good catch. Our apartment numbers are pretty easy to mix up.","zh":"幸亏你发现了。我们的公寓门牌号确实挺容易弄混的。"},
-    {"speaker":"A","en":"Definitely. Anyway, glad it made it to the right place.","zh":"确实。总之，它最后送到正确的地方就好。"}
+    {"speaker":"A","en":"Hey, sorry to bother you, but I think this package was delivered to me by mistake.","zh":"嗨，不好意思打扰你，我想这个包裹可能是误送到我这里了。","note":"Sorry to bother you, but… 是向邻居或陌生人说明事情时很自然、柔和的开场。"},
+    {"speaker":"B","en":"Oh, really? Let me check the name on it.","zh":"哦，是吗？我看看上面的名字。","note":"Let me check… 是非常高频的自然口语，用来表示“我看一下 / 我确认一下”。"},
+    {"speaker":"A","en":"Yeah, it looks like it's yours. I figured I'd bring it over before I forgot.","zh":"对，看起来是你的。我想着趁没忘记，直接给你送过来。","note":"I figured I'd… 比 I decided to… 更随意，更像真实美式口语。"},
+    {"speaker":"B","en":"Thanks, I appreciate it. I've been waiting for this all week.","zh":"谢谢，真的很感谢。我等这个包裹已经等了一整个星期了。","note":"I appreciate it. 比单纯 Thanks 多一点真诚感谢的意味。"},
+    {"speaker":"A","en":"No worries. I almost opened it before I noticed the address.","zh":"没事。我差点就打开了，后来才注意到上面的地址。","note":"No worries 是很自然的轻松回应；almost + 过去式表示“差点就……了”。"},
+    {"speaker":"B","en":"Good catch. Our apartment numbers are pretty easy to mix up.","zh":"幸亏你发现了。我们的公寓门牌号确实挺容易弄混的。","note":"Good catch. 常用于夸对方发现了一个很容易被忽略的问题。"},
+    {"speaker":"A","en":"Definitely. Anyway, glad it made it to the right place.","zh":"确实。总之，它最后送到正确的地方就好。","note":"Anyway 常用来轻松收尾或转回主线。"}
   ],
   "expressions": [
-    {"term":"Sorry to bother you, but…","zh":"不好意思打扰一下，不过……","note":"A polite, natural opener before asking or explaining something."},
-    {"term":"by mistake","zh":"不小心；弄错了。","note":"Especially natural when something went to the wrong person or place."},
-    {"term":"I figured I'd…","zh":"我想着我就……","note":"A relaxed American-English way to explain a small decision."},
-    {"term":"Good catch.","zh":"幸亏你发现了 / 你注意到了。","note":"Common when someone notices an easy-to-miss problem."},
-    {"term":"mix up","zh":"弄混；搞混。","note":"You can say mix A up with B when two things are confused."}
+    {"term":"Sorry to bother you, but…","zh":"“不好意思打扰一下，不过……”","note":"向陌生人、邻居或同事提出事情时非常自然的开场。","example":{"en":"Sorry to bother you, but is this your package?","zh":"不好意思打扰一下，这是你的包裹吗？"}},
+    {"term":"by mistake","zh":"“不小心；弄错了。”","note":"涉及“搞错对象 / 送错地方 / 做错事情”时特别自然。","example":{"en":"It was delivered to me by mistake.","zh":"它被误送到我这里了。"}},
+    {"term":"I figured I'd…","zh":"“我想着我就……”","note":"非常常见的美式口语，用来解释一个小决定。","example":{"en":"I figured I'd bring it over before I forgot.","zh":"我想着趁没忘记就给你送过来。"}},
+    {"term":"Good catch.","zh":"“幸亏你发现了 / 你注意到了这一点。”","note":"工作和生活中都很常见，尤其是发现容易忽略的问题时。","example":{"en":"Good catch. I didn't notice that typo.","zh":"幸亏你发现了。我没注意到那个拼写错误。"}},
+    {"term":"mix up","zh":"“弄混；搞混。”","note":"常见结构是 mix A up with B。","example":{"en":"I always mix up their names.","zh":"我总把他们的名字搞混。"}}
   ],
-  "exercise": "Your coworker left a phone in the meeting room and you bring it back. Reply in 2–3 natural English sentences. Try to use at least two of: No worries / I figured I'd… / Good catch / before I forgot."
+  "review": "这一轮也自然复习了 No worries 和 I appreciate it。前者适合轻松回应感谢或道歉，后者则比 Thanks 多一点真诚感谢的意味。",
+  "exercise": {
+    "context": "你在办公室发现同事把手机落在会议室了。你把手机拿给他。",
+    "prompt_en": "Oh wow, I didn't even realize I'd left it there.",
+    "prompt_zh": "哇，我甚至都没意识到自己把它落在那里了。",
+    "task": "请用 2–3 句自然英语回答。",
+    "targets": ["No worries", "I figured I'd…", "Good catch", "before I forgot"]
+  }
 }
