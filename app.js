@@ -1,8 +1,20 @@
 const app = document.querySelector('#app');
 const nav = document.querySelector('#curriculumNav');
 const searchInput = document.querySelector('#searchInput');
+const navToggle = document.querySelector('#navToggle');
+const sidebarClose = document.querySelector('#sidebarClose');
+const sidebarOverlay = document.querySelector('#sidebarOverlay');
 let curriculum;
 let currentPart;
+
+const sectionMeta = [
+  ['Vocabulary', '词汇总表', 'vocabulary'],
+  ['Scenes', '真实场景会话', 'scenes'],
+  ['Expressions', '重点表达与自然说法', 'expressions'],
+  ["Don't Mix These Up", '词义辨析与易错表达', 'comparisons'],
+  ['Useful Lines', '高频实用短句', 'useful-lines'],
+  ['Practice', '输出练习', 'practice']
+];
 
 async function loadCurriculum() {
   const res = await fetch('curriculum/index.json', { cache: 'no-store' });
@@ -40,6 +52,7 @@ async function openPart(meta) {
   currentPart = await res.json();
   renderPart(currentPart);
   document.querySelectorAll('.part-link').forEach(btn => btn.classList.toggle('active', btn.textContent.includes(meta.title)));
+  closeNav();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -55,32 +68,56 @@ function renderPart(data) {
       <p class="intro">${escapeHtml(data.intro)}</p>
       <div class="objectives"><h3>本 Part 学习目标</h3><ul>${data.objectives.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>
     </header>
-    ${section('Vocabulary', '词汇总表', renderVocabulary(data.vocabulary))}
-    ${section('Scenes', '真实场景会话', renderScenes(data.scenes))}
-    ${section('Expressions', '重点表达与自然说法', renderExpressions(data.expressions))}
-    ${section("Don't Mix These Up", '词义辨析与易错表达', renderComparisons(data.comparisons))}
-    ${section('Useful Lines', '高频实用短句', renderUsefulLines(data.usefulLines))}
-    ${section('Practice', '输出练习', renderPractice(data.practice))}
+    ${renderJumpNav(data)}
+    ${section('Vocabulary', '词汇总表', renderVocabulary(data.vocabulary), 'vocabulary', data.vocabulary?.length)}
+    ${section('Scenes', '真实场景会话', renderScenes(data.scenes), 'scenes', data.scenes?.length)}
+    ${section('Expressions', '重点表达与自然说法', renderExpressions(data.expressions), 'expressions', data.expressions?.length)}
+    ${section("Don't Mix These Up", '词义辨析与易错表达', renderComparisons(data.comparisons), 'comparisons', data.comparisons?.length)}
+    ${section('Useful Lines', '高频实用短句', renderUsefulLines(data.usefulLines), 'useful-lines', data.usefulLines?.length)}
+    ${section('Practice', '输出练习', renderPractice(data.practice), 'practice', data.practice?.length)}
   `;
   app.appendChild(article);
+  attachVocabInteractions();
   applySearch();
 }
 
-function section(en, zh, body) {
-  return `<section class="content-section searchable"><div class="section-title"><span>${en}</span><h3>${zh}</h3></div>${body}</section>`;
+function renderJumpNav(data) {
+  return `<nav class="part-jump" aria-label="Part 内快速导航">${sectionMeta.map(([en, zh, id]) => {
+    const key = id === 'useful-lines' ? 'usefulLines' : id;
+    const count = Array.isArray(data[key]) ? data[key].length : 0;
+    return `<a href="#${id}">${escapeHtml(en)}${count ? ` · ${count}` : ''}</a>`;
+  }).join('')}</nav>`;
 }
 
-function renderVocabulary(items) {
-  return `<div class="vocab-grid">${items.map(item => `
+function section(en, zh, body, id, count) {
+  return `<section id="${id}" class="content-section searchable"><div class="section-title"><div class="section-title-text"><span>${en}</span><h3>${zh}</h3></div>${Number.isFinite(count) ? `<div class="section-count">${count} 项</div>` : ''}</div>${body}</section>`;
+}
+
+function renderVocabulary(items = []) {
+  return `<div class="vocab-grid">${items.map((item, index) => `
     <article class="vocab-card searchable">
-      <h4>${escapeHtml(item.term)}</h4>
-      <p class="zh-main">${escapeHtml(item.zh)}</p>
-      ${item.note ? `<p class="note">${escapeHtml(item.note)}</p>` : ''}
-      ${item.example ? `<div class="example"><p>${escapeHtml(item.example.en)}</p><p>${escapeHtml(item.example.zh)}</p></div>` : ''}
+      <button class="vocab-summary" type="button" aria-expanded="false" aria-controls="vocab-detail-${index}">
+        <span><span class="vocab-term">${escapeHtml(item.term)}</span><span class="vocab-zh">${escapeHtml(item.zh)}</span></span>
+        <span class="vocab-chevron" aria-hidden="true">⌄</span>
+      </button>
+      <div class="vocab-detail" id="vocab-detail-${index}">
+        ${item.note ? `<p class="note">${escapeHtml(item.note)}</p>` : ''}
+        ${item.example ? `<div class="example"><p>${escapeHtml(item.example.en)}</p><p>${escapeHtml(item.example.zh)}</p></div>` : '<p class="note">点击词条可收起或展开详细说明。</p>'}
+      </div>
     </article>`).join('')}</div>`;
 }
 
-function renderScenes(scenes) {
+function attachVocabInteractions() {
+  document.querySelectorAll('.vocab-summary').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const card = btn.closest('.vocab-card');
+      const open = card.classList.toggle('open');
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+}
+
+function renderScenes(scenes = []) {
   return scenes.map((scene, i) => `
     <article class="scene-card searchable">
       <div class="scene-head"><div><p class="scene-kicker">Scene ${i + 1}</p><h4>${escapeHtml(scene.title)}</h4><p>${escapeHtml(scene.zh)}</p></div></div>
@@ -89,14 +126,14 @@ function renderScenes(scenes) {
     </article>`).join('');
 }
 
-function renderExpressions(items) {
+function renderExpressions(items = []) {
   return `<div class="expression-list">${items.map(item => `
     <article class="expression-card searchable"><h4>${escapeHtml(item.term)}</h4><p class="zh-main">${escapeHtml(item.zh)}</p>
       ${item.alternatives?.length ? `<div class="alternatives">${item.alternatives.map(a => `<div><p class="en">${escapeHtml(a.en)}</p><p class="zh">${escapeHtml(a.zh)}</p></div>`).join('')}</div>` : ''}
     </article>`).join('')}</div>`;
 }
 
-function renderComparisons(items) {
+function renderComparisons(items = []) {
   return `<div class="comparison-list">${items.map(item => `
     <article class="comparison-card searchable"><h4>${escapeHtml(item.title)}</h4>
       ${item.items.map(x => `<div class="compare-row"><strong>${escapeHtml(x.term)}</strong><span>${escapeHtml(x.zh)}</span></div>`).join('')}
@@ -104,11 +141,11 @@ function renderComparisons(items) {
     </article>`).join('')}</div>`;
 }
 
-function renderUsefulLines(items) {
+function renderUsefulLines(items = []) {
   return `<div class="useful-lines">${items.map(x => `<div class="line-card searchable"><p class="en">${escapeHtml(x.en)}</p><p class="zh">${escapeHtml(x.zh)}</p></div>`).join('')}</div>`;
 }
 
-function renderPractice(items) {
+function renderPractice(items = []) {
   return `<div class="practice-list">${items.map(item => {
     if (item.type === 'rewrite') {
       return `<article class="practice-card searchable"><h4>${escapeHtml(item.title)}</h4>${item.items.map(x => `<div class="rewrite"><p class="source">${escapeHtml(x.source)}</p><p class="arrow">→</p><p class="better">${escapeHtml(x.better)}</p><p class="zh">${escapeHtml(x.zh)}</p></div>`).join('')}</article>`;
@@ -125,11 +162,25 @@ function applySearch() {
   });
 }
 
+function openNav() {
+  document.body.classList.add('nav-open');
+  navToggle?.setAttribute('aria-expanded', 'true');
+}
+function closeNav() {
+  document.body.classList.remove('nav-open');
+  navToggle?.setAttribute('aria-expanded', 'false');
+}
+
 function escapeHtml(value = '') {
   return String(value).replace(/[&<>'\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','\"':'&quot;'}[c]));
 }
 
 searchInput.addEventListener('input', applySearch);
+navToggle?.addEventListener('click', () => document.body.classList.contains('nav-open') ? closeNav() : openNav());
+sidebarClose?.addEventListener('click', closeNav);
+sidebarOverlay?.addEventListener('click', closeNav);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
 loadCurriculum().catch(err => {
   console.error(err);
   app.innerHTML = '<div class="empty">课程加载失败，请刷新页面。</div>';
