@@ -1,0 +1,24 @@
+{
+  "chapters": [
+    {
+      "id": "chapter-1",
+      "title": "Daily Life",
+      "zh": "生活的样貌",
+      "units": [
+        {
+          "id": "unit-1",
+          "title": "In the Morning",
+          "zh": "早晨",
+          "parts": [
+            {
+              "id": "part-1",
+              "title": "Waking Up & Being Late",
+              "zh": "起床和迟到",
+              "file": "curriculum/chapter-1/unit-1/part-1.json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
