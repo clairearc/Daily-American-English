@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-09",
+  "title": "Finding a Seat at a Coffee Shop",
+  "setting": "The coffee shop is crowded, and you ask whether the empty seat next to someone is available.",
+  "audio": "https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=38e9f8cb-bd3f-4cc3-8e0b-ad2d3276de5a.wav",
+  "dialogue": [
+    {"speaker":"A","en":"Hey, do you know if this seat's taken?","zh":"嗨，你知道这个座位有人吗？"},
+    {"speaker":"B","en":"No, go ahead. I'm just waiting for my drink.","zh":"没有，你坐吧。我只是在等我的饮料。"},
+    {"speaker":"A","en":"Thanks. It's packed in here today.","zh":"谢谢。今天这里人真多。"},
+    {"speaker":"B","en":"I know. I almost turned around when I saw the line.","zh":"就是啊。我看到排队那么长，差点直接掉头走了。"},
+    {"speaker":"A","en":"Same. I figured I'd give it a few minutes and see if it moved.","zh":"我也是。我想着先等几分钟，看看队伍会不会往前走。"},
+    {"speaker":"B","en":"Good call. It actually went pretty fast.","zh":"这决定不错。其实队伍走得还挺快的。"},
+    {"speaker":"A","en":"Yeah, no worries. I wasn't in a huge rush anyway.","zh":"是啊，没事。反正我也不是特别赶时间。"}
+  ],
+  "expressions": [
+    {"term":"Is this seat taken?","zh":"这个座位有人吗？","note":"One of the most natural ways to ask about an empty seat."},
+    {"term":"It's packed.","zh":"人很多；挤满了。","note":"Very common for restaurants, stores, bars, trains, and events."},
+    {"term":"I figured I'd…","zh":"我想着我就……","note":"Casual and common in everyday American conversation."},
+    {"term":"Good call.","zh":"好主意 / 这个决定不错。","note":"Used to approve of someone's choice or judgment."},
+    {"term":"in a rush","zh":"赶时间。","note":"A high-frequency phrase: I'm kind of in a rush."}
+  ],
+  "exercise": "You enter a crowded coffee shop and see an empty seat next to me. Say 2–3 natural English sentences: ask whether the seat is taken, comment that the place is packed, and mention that you're not in a big rush."
+}
