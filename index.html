@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +12,7 @@
     <div>
       <p class="eyebrow">Everyday American English</p>
       <h1>Daily American English</h1>
-      <p class="subtitle">7–10 minute practice · natural U.S. English · 中英对照</p>
+      <p class="subtitle">每天 7–10 分钟 · 自然当代美式英语 · 中英对照</p>
     </div>
     <nav class="tabs" aria-label="Primary">
       <button class="tab active" data-view="today">Today</button>
@@ -25,7 +25,7 @@
     <section class="toolbar">
       <label class="search-wrap">
         <span class="sr-only">Search lessons</span>
-        <input id="searchInput" type="search" placeholder="Search expressions or situations…" autocomplete="off" />
+        <input id="searchInput" type="search" placeholder="搜索场景、单词或表达…" autocomplete="off" />
       </label>
     </section>
 
@@ -44,7 +44,10 @@
         <button class="favorite-btn" aria-label="Add to favorites">☆</button>
       </div>
 
-      <p class="setting"></p>
+      <section class="setting-panel">
+        <p class="section-kicker">场景</p>
+        <p class="setting"></p>
+      </section>
 
       <section class="audio-panel">
         <div>
@@ -55,18 +58,28 @@
       </section>
 
       <section>
-        <h3>Dialogue</h3>
+        <div class="section-heading">
+          <span class="section-number">1</span>
+          <h3>Dialogue</h3>
+        </div>
         <div class="dialogue"></div>
       </section>
 
       <section>
-        <h3>Useful Expressions</h3>
+        <div class="section-heading">
+          <span class="section-number">2</span>
+          <h3>今天重点掌握的表达</h3>
+        </div>
         <div class="expressions"></div>
+        <div class="review-note" hidden></div>
       </section>
 
       <section class="exercise-section">
-        <h3>Mini Role-play</h3>
-        <p class="exercise"></p>
+        <div class="section-heading">
+          <span class="section-number">3</span>
+          <h3>Mini Role-play</h3>
+        </div>
+        <div class="exercise-content"></div>
       </section>
     </article>
   </template>
