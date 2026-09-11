@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-11",
+  "title": "Rescheduling an Appointment",
+  "setting": "You need to move an appointment because something came up at work.",
+  "audio": "https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=4f94f07d-0e10-44d5-bbaa-e8d6b4bbf084.wav",
+  "dialogue": [
+    {"speaker":"A","en":"Hey, any chance I could push my appointment back a little?","zh":"嗨，请问我能不能把预约稍微往后推一点？"},
+    {"speaker":"B","en":"Sure. What time were you hoping for?","zh":"当然。你希望改到几点？"},
+    {"speaker":"A","en":"Would four-thirty work? Something came up at work.","zh":"四点半可以吗？工作上临时出了点事。"},
+    {"speaker":"B","en":"Let me check. Yeah, we can fit you in at four-thirty.","zh":"我查一下。可以，我们能把你安排在四点半。"},
+    {"speaker":"A","en":"Perfect. I appreciate it. Sorry for the last-minute change.","zh":"太好了，非常感谢。不好意思这么临时改时间。"},
+    {"speaker":"B","en":"No worries. Just try to get here about ten minutes early.","zh":"没关系。尽量提前十分钟左右到就行。"},
+    {"speaker":"A","en":"Will do. Thanks for working with me.","zh":"好的，会的。谢谢你愿意配合我调整。"}
+  ],
+  "expressions": [
+    {"term":"Any chance I could…?","zh":"不知道我能不能……？","note":"A natural, polite way to ask for a favor or small accommodation."},
+    {"term":"Something came up.","zh":"临时有事 / 突然出了点状况。","note":"Very common when you do not need to explain the details."},
+    {"term":"fit someone in","zh":"挤出时间安排某人。","note":"Common for appointments, doctors, salons, repairs, and schedules."},
+    {"term":"last-minute","zh":"临时的；最后一刻才发生的。","note":"Often used in phrases like a last-minute change or cancellation."},
+    {"term":"Will do.","zh":"好的 / 没问题，我会的。","note":"A concise, natural response after someone gives you a simple instruction."}
+  ],
+  "exercise": "You have a 3:00 PM dentist appointment, but something came up. Ask to move it to 4:00 PM in 2–3 natural English sentences. Try to use: Any chance I could…? / Something came up / Would four o’clock work?"
+}
