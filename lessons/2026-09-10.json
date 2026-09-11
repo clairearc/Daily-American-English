@@ -1,0 +1,23 @@
+{
+  "date": "2026-09-10",
+  "title": "A Package Delivered by Mistake",
+  "setting": "A neighbor's package was delivered to your door, so you bring it over.",
+  "audio": "https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=fd9b3a32-3b9a-49c9-a0e4-673824ded98f.wav",
+  "dialogue": [
+    {"speaker":"A","en":"Hey, sorry to bother you, but I think this package was delivered to me by mistake.","zh":"嗨，不好意思打扰你，我想这个包裹可能是误送到我这里了。"},
+    {"speaker":"B","en":"Oh, really? Let me check the name on it.","zh":"哦，是吗？我看看上面的名字。"},
+    {"speaker":"A","en":"Yeah, it looks like it's yours. I figured I'd bring it over before I forgot.","zh":"对，看起来是你的。我想着趁没忘记，直接给你送过来。"},
+    {"speaker":"B","en":"Thanks, I appreciate it. I've been waiting for this all week.","zh":"谢谢，真的很感谢。我等这个包裹已经等了一整个星期了。"},
+    {"speaker":"A","en":"No worries. I almost opened it before I noticed the address.","zh":"没事。我差点就打开了，后来才注意到上面的地址。"},
+    {"speaker":"B","en":"Good catch. Our apartment numbers are pretty easy to mix up.","zh":"幸亏你发现了。我们的公寓门牌号确实挺容易弄混的。"},
+    {"speaker":"A","en":"Definitely. Anyway, glad it made it to the right place.","zh":"确实。总之，它最后送到正确的地方就好。"}
+  ],
+  "expressions": [
+    {"term":"Sorry to bother you, but…","zh":"不好意思打扰一下，不过……","note":"A polite, natural opener before asking or explaining something."},
+    {"term":"by mistake","zh":"不小心；弄错了。","note":"Especially natural when something went to the wrong person or place."},
+    {"term":"I figured I'd…","zh":"我想着我就……","note":"A relaxed American-English way to explain a small decision."},
+    {"term":"Good catch.","zh":"幸亏你发现了 / 你注意到了。","note":"Common when someone notices an easy-to-miss problem."},
+    {"term":"mix up","zh":"弄混；搞混。","note":"You can say mix A up with B when two things are confused."}
+  ],
+  "exercise": "Your coworker left a phone in the meeting room and you bring it back. Reply in 2–3 natural English sentences. Try to use at least two of: No worries / I figured I'd… / Good catch / before I forgot."
+}
