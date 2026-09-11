@@ -3,28 +3,43 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#f7f4ee" />
+  <meta name="theme-color" content="#f4efe6" />
   <title>Daily American English</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <a class="skip-link" href="#app">跳到课程内容</a>
+
   <header class="site-header">
-    <p class="eyebrow">Everyday American English</p>
-    <h1>Daily American English</h1>
-    <p class="subtitle">面向中文母语学习者的自然当代美式英语课程 · 中英对照 · 场景化学习</p>
+    <div class="brand-lockup">
+      <p class="eyebrow">Everyday American English</p>
+      <h1>Daily American English</h1>
+      <p class="subtitle">面向中文母语学习者的自然当代美式英语课程 · 中英对照 · 场景化学习</p>
+    </div>
   </header>
 
   <div class="page-shell">
-    <section class="toolbar">
+    <section class="toolbar" aria-label="课程工具">
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="courseSidebar">
+        <span aria-hidden="true">☰</span>
+        <span>课程目录</span>
+      </button>
       <label class="search-wrap">
         <span class="sr-only">搜索课程内容</span>
+        <span class="search-icon" aria-hidden="true">⌕</span>
         <input id="searchInput" type="search" placeholder="搜索单词、表达、场景或中文释义…" autocomplete="off" />
       </label>
     </section>
 
     <div class="course-layout">
-      <aside class="course-sidebar">
-        <div class="sidebar-title">课程目录</div>
+      <aside class="course-sidebar" id="courseSidebar" aria-label="课程目录">
+        <div class="sidebar-head">
+          <div>
+            <p class="sidebar-kicker">COURSE MAP</p>
+            <div class="sidebar-title">课程目录</div>
+          </div>
+          <button class="sidebar-close" id="sidebarClose" type="button" aria-label="关闭课程目录">×</button>
+        </div>
         <nav id="curriculumNav" aria-label="课程目录"></nav>
       </aside>
 
@@ -34,6 +49,7 @@
     </div>
   </div>
 
+  <button class="sidebar-overlay" id="sidebarOverlay" type="button" aria-label="关闭课程目录" tabindex="-1"></button>
   <script src="app.js" defer></script>
 </body>
 </html>
