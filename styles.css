@@ -6,6 +6,7 @@
   --line: #e6dfd4;
   --accent: #375a7f;
   --accent-soft: #eaf0f6;
+  --warm-soft: #f2eee6;
   --shadow: 0 18px 45px rgba(42, 38, 32, .08);
 }
 * { box-sizing: border-box; }
@@ -15,7 +16,7 @@ body {
   background: var(--bg);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  line-height: 1.65;
+  line-height: 1.68;
 }
 button, input { font: inherit; }
 button { cursor: pointer; }
@@ -65,33 +66,84 @@ h1 { margin: 0; font-size: clamp(2rem, 5vw, 3.7rem); line-height: 1.04; letter-s
 .lesson-date { margin: 0 0 5px; color: var(--accent); font-size: .9rem; font-weight: 700; }
 .lesson-title { margin: 0; font-size: clamp(1.55rem, 4vw, 2.45rem); line-height: 1.15; }
 .favorite-btn { border: 0; background: transparent; font-size: 1.9rem; line-height: 1; color: var(--accent); padding: 4px; }
-.setting { font-size: 1.02rem; color: var(--muted); margin: 18px 0 22px; }
+.setting-panel { margin-top: 20px; }
+.setting { font-size: 1.02rem; color: var(--muted); margin: 4px 0 0; }
 .audio-panel {
   background: var(--accent-soft);
   border-radius: 18px;
   padding: 16px;
   display: grid;
   gap: 12px;
-  margin: 0 0 30px;
+  margin: 24px 0 30px;
 }
 .audio-tip { margin: 2px 0 0; font-size: .93rem; color: var(--muted); }
 .audio-player { width: 100%; }
 section + section { margin-top: 30px; }
-h3 { margin: 0 0 14px; font-size: 1.12rem; }
-.dialogue-turn { padding: 14px 0; border-top: 1px solid var(--line); }
+.section-heading { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.section-heading h3 { margin: 0; font-size: 1.15rem; }
+.section-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  background: var(--ink);
+  color: white;
+  font-size: .82rem;
+  font-weight: 800;
+  flex: 0 0 auto;
+}
+.dialogue-turn { padding: 15px 0; border-top: 1px solid var(--line); }
 .dialogue-turn:first-child { border-top: 0; padding-top: 0; }
 .speaker { font-size: .78rem; font-weight: 800; color: var(--accent); text-transform: uppercase; letter-spacing: .08em; }
-.en { margin: 3px 0 2px; font-weight: 650; font-size: 1.05rem; }
+.en { margin: 3px 0 2px; font-weight: 700; font-size: 1.07rem; }
 .zh { margin: 0; color: var(--muted); }
+.usage-note {
+  margin: 8px 0 0;
+  padding: 9px 11px;
+  border-left: 3px solid var(--accent);
+  background: rgba(234,240,246,.6);
+  color: #53606a;
+  border-radius: 0 10px 10px 0;
+  font-size: .94rem;
+}
 .expression {
-  padding: 13px 0;
+  padding: 16px 0;
   border-top: 1px solid var(--line);
 }
 .expression:first-child { border-top: 0; padding-top: 0; }
-.expression strong { color: var(--accent); }
-.expression p { margin: 3px 0 0; color: var(--muted); }
-.exercise-section { background: #f2eee6; border-radius: 18px; padding: 18px; }
-.exercise { margin: 0; white-space: pre-line; }
+.expression h4 { margin: 0; color: var(--accent); font-size: 1.03rem; }
+.expression p { margin: 4px 0 0; }
+.expression-zh, .expression-note, .example-zh { color: var(--muted); }
+.example-box {
+  margin-top: 9px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #faf8f3;
+  border: 1px solid var(--line);
+}
+.example-en { font-weight: 650; }
+.review-note {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--accent-soft);
+  border-radius: 14px;
+  color: #52606c;
+}
+.exercise-section { background: var(--warm-soft); border-radius: 18px; padding: 18px; }
+.exercise-content p { margin: 0; }
+.exercise-context { color: #53585c; }
+.prompt-box {
+  margin: 14px 0;
+  padding: 13px 14px;
+  background: rgba(255,255,255,.72);
+  border: 1px solid #ded6c9;
+  border-radius: 14px;
+}
+.prompt-en { font-weight: 750; }
+.prompt-zh { color: var(--muted); margin-top: 4px !important; }
+.exercise-task { margin-top: 10px !important; }
+.targets { margin-top: 10px !important; color: var(--accent); }
 .history-list { display: grid; gap: 12px; }
 .history-item {
   padding: 18px;
@@ -111,7 +163,9 @@ h3 { margin: 0 0 14px; font-size: 1.12rem; }
 @media (max-width: 520px) {
   .site-header { padding-top: 24px; }
   .page-shell, .site-header { padding-left: 14px; padding-right: 14px; }
-  .lesson-card { border-radius: 20px; }
+  .lesson-card { border-radius: 20px; padding: 18px 16px 22px; }
   .history-item { align-items: flex-start; }
   .subtitle { font-size: .94rem; }
+  .en { font-size: 1.03rem; }
+  .audio-panel { padding: 14px; }
 }
