@@ -1,0 +1,167 @@
+{
+  "chapter": {"number": 1, "title": "Daily Life", "zh": "生活的样貌"},
+  "unit": {"number": 1, "title": "In the Morning", "zh": "早晨"},
+  "part": {"number": 1, "title": "Waking Up & Being Late", "zh": "起床和迟到"},
+  "intro": "这一 Part 帮你掌握从闹钟响、赖床、睡懒觉，到睡过头、赶时间以及描述刚起床状态的一整组自然美式表达。",
+  "objectives": [
+    "听懂并自然使用起床、赖床、睡过头、迟到相关的高频口语。",
+    "区分 wake up / get up、sleep in / oversleep、in a rush / hurry up 等容易混淆的表达。",
+    "能够用自然美语描述自己刚醒、很困、完全清醒、黑眼圈或眼睛浮肿等晨间状态。"
+  ],
+  "vocabulary": [
+    {"term":"stretch","zh":"伸展；伸懒腰","note":"常用于起床后活动身体。","example":{"en":"I always stretch when I get out of bed.","zh":"我下床时通常会伸伸懒腰。"}},
+    {"term":"pajamas","zh":"睡衣裤","note":"通常用复数形式；a pair of pajamas = 一套睡衣裤。"},
+    {"term":"sleep in","zh":"睡懒觉；比平时晚起","example":{"en":"I slept in until ten.","zh":"我睡到十点才起来。"}},
+    {"term":"stay in bed","zh":"继续躺在床上；赖床"},
+    {"term":"oversleep","zh":"睡过头","note":"过去式 overslept。","example":{"en":"I overslept this morning.","zh":"我今天早上睡过头了。"}},
+    {"term":"crawl back into bed","zh":"又钻回床上；重新钻进被窝","note":"比 go back to bed 更有懒洋洋钻回去的画面感。"},
+    {"term":"snooze button","zh":"闹钟的贪睡按钮"},
+    {"term":"hit the snooze button","zh":"按下贪睡按钮","note":"比 press the snooze button 更口语。"},
+    {"term":"go off","zh":"（闹钟、警报器）响","example":{"en":"My alarm goes off at seven.","zh":"我的闹钟七点响。"}},
+    {"term":"turn off","zh":"关闭；关掉","example":{"en":"I turned off my alarm.","zh":"我把闹钟关了。"}},
+    {"term":"miss","zh":"错过；没赶上","note":"常见搭配：miss the bus / train / flight。"},
+    {"term":"in a rush","zh":"赶时间；很匆忙","example":{"en":"I'm in a rush this morning.","zh":"我今天早上很赶。"}},
+    {"term":"hurry up","zh":"快点；动作快一点","example":{"en":"Hurry up! We're going to be late.","zh":"快点！我们要迟到了。"}},
+    {"term":"wake up","zh":"醒来"},
+    {"term":"get up","zh":"起床；从床上起来"},
+    {"term":"Rise and shine!","zh":"起床啦！快起来！","note":"活泼、熟人间常见的叫人起床说法。"},
+    {"term":"sleepyhead","zh":"瞌睡虫；爱睡懒觉的人","note":"通常带亲昵或玩笑语气。"},
+    {"term":"wide awake","zh":"完全清醒；一点都不困"},
+    {"term":"sleepy","zh":"困的；想睡觉的"},
+    {"term":"drowsy","zh":"昏昏欲睡的","note":"比 sleepy 稍偏描述性，也常见于药物说明。"},
+    {"term":"puffy eyes","zh":"浮肿的眼睛；泡泡眼"},
+    {"term":"dark circles","zh":"黑眼圈","note":"常说 dark circles under your eyes。"},
+    {"term":"panic","zh":"恐慌；惊慌","note":"可作名词或动词。Don't panic. = 别慌。"},
+    {"term":"panicked","zh":"惊慌的；慌张的"},
+    {"term":"alarm / alarm clock","zh":"闹钟","note":"上下文明确时，口语里常直接说 alarm。"},
+    {"term":"be grumpy in the morning","zh":"早上脾气不好；有起床气"},
+    {"term":"not be a morning person","zh":"不是晨型人；早上通常状态不好"},
+    {"term":"sleep through your alarm","zh":"睡得太沉，闹钟响了也没醒"},
+    {"term":"get out of bed","zh":"从床上起来"},
+    {"term":"sit up","zh":"坐起来"},
+    {"term":"get moving","zh":"赶紧行动起来；开始动起来"},
+    {"term":"go back to bed","zh":"回床上继续睡"},
+    {"term":"go back to sleep","zh":"再次睡着"},
+    {"term":"not fully awake yet","zh":"还没有完全清醒"},
+    {"term":"look half asleep","zh":"看起来还没睡醒"},
+    {"term":"barely sleep","zh":"几乎没怎么睡"},
+    {"term":"be running late","zh":"要迟到了；已经比计划晚了"},
+    {"term":"be running behind","zh":"时间进度落后；已经晚于计划"},
+    {"term":"get dressed","zh":"穿好衣服"},
+    {"term":"change out of your pajamas","zh":"把睡衣换下来"},
+    {"term":"wake someone up","zh":"把某人叫醒；让某人清醒"}
+  ],
+  "scenes": [
+    {
+      "title":"The Alarm Goes Off",
+      "zh":"闹钟响了，但还是不想起床",
+      "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=fd518b0b-157e-4b91-ba8d-6e53c06a6681.wav",
+      "dialogue":[
+        {"speaker":"A","en":"Did your alarm go off?","zh":"你的闹钟响了吗？"},
+        {"speaker":"B","en":"Yeah, but I hit the snooze button twice.","zh":"响了，不过我按了两次贪睡按钮。"},
+        {"speaker":"A","en":"You'd better get up. It's already seven fifteen.","zh":"你最好赶快起床。已经七点十五了。"},
+        {"speaker":"B","en":"I know. I'm still so sleepy.","zh":"我知道。我还是好困。"},
+        {"speaker":"A","en":"Come on. Sit up, stretch a little, and get moving.","zh":"快点。先坐起来，伸伸懒腰，开始行动吧。"},
+        {"speaker":"B","en":"Okay, okay. I'm up.","zh":"好啦好啦，我起来了。"}
+      ]
+    },
+    {
+      "title":"Someone Is Trying to Wake You Up",
+      "zh":"家人、伴侣或室友叫你起床",
+      "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=dc711568-fe06-47f8-8adb-4f560a288943.wav",
+      "dialogue":[
+        {"speaker":"A","en":"Rise and shine, sleepyhead.","zh":"起床啦，瞌睡虫。"},
+        {"speaker":"B","en":"I'm awake. I'm just not ready to get out of bed yet.","zh":"我醒了。我只是不想现在就下床。"},
+        {"speaker":"A","en":"You've been awake for twenty minutes.","zh":"你已经醒了二十分钟了。"},
+        {"speaker":"B","en":"I know. I'm not fully awake yet.","zh":"我知道。我还没有完全清醒。"},
+        {"speaker":"A","en":"At least sit up and open the curtains.","zh":"至少先坐起来，把窗帘打开吧。"},
+        {"speaker":"B","en":"Fine. Give me a minute.","zh":"好吧。给我一分钟。"}
+      ]
+    },
+    {
+      "title":"Sleeping In on the Weekend",
+      "zh":"周末睡懒觉、赖床",
+      "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=943bef15-3f3f-4e8f-942d-b3d6b2d415c3.wav",
+      "dialogue":[
+        {"speaker":"A","en":"Are you getting up anytime soon?","zh":"你近期有打算起床吗？"},
+        {"speaker":"B","en":"Not really. It's Saturday, so I'm sleeping in.","zh":"不太想。今天星期六，我要睡个懒觉。"},
+        {"speaker":"A","en":"You've been in bed all morning.","zh":"你整个上午都在床上。"},
+        {"speaker":"B","en":"I know. I just want to stay in bed a little longer.","zh":"我知道。我只是想再赖一会儿。"},
+        {"speaker":"A","en":"Fair enough. Are you going back to sleep?","zh":"也行。你还打算继续睡吗？"},
+        {"speaker":"B","en":"Maybe. I might crawl back into bed after I get some water.","zh":"也许吧。我喝完水以后可能再钻回床上。"}
+      ]
+    },
+    {
+      "title":"I Overslept",
+      "zh":"睡过头，突然发现马上迟到了",
+      "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=3c38a237-7020-4018-93c3-199cf7ccd2a2.wav",
+      "dialogue":[
+        {"speaker":"A","en":"Wait—what time is it?","zh":"等等——现在几点了？"},
+        {"speaker":"B","en":"It's almost eight.","zh":"快八点了。"},
+        {"speaker":"A","en":"No way. I overslept. I must've turned off my alarm in my sleep.","zh":"不会吧。我睡过头了。我肯定是在睡梦里把闹钟关掉了。"},
+        {"speaker":"B","en":"Don't panic. You still have time if you hurry.","zh":"别慌。你快一点的话还来得及。"},
+        {"speaker":"A","en":"I'm wide awake now. I need to get dressed.","zh":"我现在彻底清醒了。我得穿衣服了。"},
+        {"speaker":"B","en":"Then hurry up, or you're going to miss the bus.","zh":"那就快点，不然你要赶不上公交车了。"}
+      ]
+    },
+    {
+      "title":"Looking Rough in the Morning",
+      "zh":"没睡好，早晨看起来很疲惫",
+      "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=6d7e2ab3-cae9-459e-9d83-78735c31b698.wav",
+      "dialogue":[
+        {"speaker":"A","en":"You look exhausted. Did you sleep okay?","zh":"你看起来累坏了。昨晚睡得好吗？"},
+        {"speaker":"B","en":"Not really. My eyes are all puffy, and I've got dark circles under them.","zh":"不太好。我的眼睛都肿了，而且黑眼圈很明显。"},
+        {"speaker":"A","en":"You do look a little drowsy.","zh":"你看起来确实有点昏昏欲睡。"},
+        {"speaker":"B","en":"I feel drowsy. I barely slept last night.","zh":"我感觉昏昏沉沉的。我昨晚几乎没怎么睡。"},
+        {"speaker":"A","en":"Maybe change out of your pajamas and get some coffee.","zh":"也许先把睡衣换掉，再喝点咖啡。"},
+        {"speaker":"B","en":"Good idea. I need something to wake me up.","zh":"好主意。我需要点东西让我清醒起来。"}
+      ]
+    },
+    {
+      "title":"I'm Not a Morning Person",
+      "zh":"早上不爱说话、起床气",
+      "dialogue":[
+        {"speaker":"A","en":"You're awfully quiet this morning.","zh":"你今天早上怎么这么安静？"},
+        {"speaker":"B","en":"Give me ten minutes. I'm not a morning person.","zh":"给我十分钟。我不是早上状态很好的人。"},
+        {"speaker":"A","en":"Bad night's sleep?","zh":"昨晚没睡好吗？"},
+        {"speaker":"B","en":"Not really. I'm just always a little grumpy when I first wake up.","zh":"也不是。我刚醒的时候就是总有点起床气。"},
+        {"speaker":"A","en":"Coffee first, conversation later?","zh":"先喝咖啡，等会儿再聊天？"},
+        {"speaker":"B","en":"Exactly.","zh":"没错。"}
+      ]
+    }
+  ],
+  "expressions": [
+    {"term":"I overslept.","zh":"我睡过头了。","alternatives":[{"en":"I slept through my alarm.","zh":"我睡得太沉，闹钟响了都没醒。"},{"en":"I didn't hear my alarm go off.","zh":"我没听见闹钟响。"},{"en":"I must've turned my alarm off in my sleep.","zh":"我肯定睡着时把闹钟关掉了。"}]},
+    {"term":"I'm running late.","zh":"我要迟到了。","alternatives":[{"en":"I'm already running behind.","zh":"我已经比计划晚了。"},{"en":"I'm in a rush.","zh":"我现在很赶时间。"},{"en":"I need to get moving.","zh":"我得赶紧行动起来了。"}]},
+    {"term":"I'm not fully awake yet.","zh":"我还没有完全清醒。","alternatives":[{"en":"I'm still sleepy.","zh":"我还是很困。"},{"en":"I'm half asleep.","zh":"我还处于半睡半醒状态。"},{"en":"I need coffee before I can function.","zh":"我得先喝咖啡才能正常运转。"}]},
+    {"term":"I'm not a morning person.","zh":"我不是晨型人；我早上通常状态不好。","alternatives":[{"en":"I'm always a little grumpy when I first wake up.","zh":"我刚醒的时候总有点起床气。"},{"en":"Give me a few minutes to wake up.","zh":"给我几分钟清醒一下。"}]}
+  ],
+  "comparisons": [
+    {"title":"wake up vs. get up","items":[{"term":"wake up","zh":"醒来"},{"term":"get up","zh":"从床上起来"}],"example":{"en":"I woke up at seven, but I didn't get up until seven-thirty.","zh":"我七点醒了，但七点半才真正起床。"}},
+    {"title":"sleep in vs. oversleep","items":[{"term":"sleep in","zh":"主动或允许自己比平时晚起"},{"term":"oversleep","zh":"意外睡过头，通常会打乱计划或导致迟到"}]},
+    {"title":"sleepy vs. drowsy","items":[{"term":"sleepy","zh":"困；日常最常用"},{"term":"drowsy","zh":"昏昏欲睡；略偏描述性，也常见于药物副作用"}]},
+    {"title":"stay in bed vs. go back to bed","items":[{"term":"stay in bed","zh":"一直没有离开床"},{"term":"go back to bed","zh":"已经起来了，又回到床上"}]},
+    {"title":"in a rush vs. hurry up","items":[{"term":"in a rush","zh":"自己赶时间"},{"term":"hurry up","zh":"催促别人或自己快一点"}]},
+    {"title":"morning tantrum / grumpy / morning person","items":[{"term":"throw a tantrum","zh":"大发脾气；情绪爆发，尤其常用于儿童"},{"term":"be grumpy in the morning","zh":"早上脾气不好；有起床气"},{"term":"not be a morning person","zh":"不是晨型人；早上通常没精神或不爱说话"}]}
+  ],
+  "usefulLines": [
+    {"en":"Five more minutes.","zh":"再睡五分钟。"},
+    {"en":"I'm up, I'm up.","zh":"起来了，起来了。"},
+    {"en":"I'm still half asleep.","zh":"我还半睡半醒呢。"},
+    {"en":"I barely slept last night.","zh":"我昨晚几乎没睡。"},
+    {"en":"I slept through my alarm.","zh":"我睡得太沉，连闹钟都没听见。"},
+    {"en":"I'm running late.","zh":"我要迟到了。"},
+    {"en":"I need to get moving.","zh":"我得赶紧行动了。"},
+    {"en":"I'm not a morning person.","zh":"我不是晨型人。"},
+    {"en":"I need coffee before I can function.","zh":"我得喝咖啡才能正常运转。"},
+    {"en":"I look terrible this morning.","zh":"我今天早上看起来糟透了。"},
+    {"en":"My eyes are so puffy.","zh":"我眼睛肿得厉害。"},
+    {"en":"I've got dark circles under my eyes.","zh":"我的黑眼圈很明显。"},
+    {"en":"I need something to wake me up.","zh":"我需要点东西让我清醒。"}
+  ],
+  "practice": [
+    {"type":"roleplay","title":"Mini Role-play A · 睡过头","context":"你 8:10 才醒，但 8:30 必须出门。","promptEn":"Hey, aren't you supposed to be at work soon?","promptZh":"嘿，你不是马上就该去上班了吗？","task":"请用 3–4 句英文回答。","targets":["oversleep — 睡过头","turn off my alarm — 关掉闹钟","in a rush — 赶时间","wide awake — 完全清醒","miss the bus — 没赶上公交车"]},
+    {"type":"roleplay","title":"Mini Role-play B · 周末赖床","context":"周末上午快十一点，你还躺在床上。","promptEn":"Are you seriously still in bed? It's almost eleven.","promptZh":"你不会真的还在床上吧？都快十一点了。","task":"请自然回答 2–4 句。","targets":["sleep in — 睡懒觉","stay in bed — 赖床","go back to sleep — 再睡着","not be a morning person — 不是晨型人"]},
+    {"type":"rewrite","title":"Quick Rewrite · 改成自然美语","items":[{"source":"I woke up late and now I am hurried.","better":"I overslept, and now I'm in a rush.","zh":"我睡过头了，现在特别赶。"},{"source":"My alarm rang, but I pressed the delay button.","better":"My alarm went off, but I hit the snooze button.","zh":"我的闹钟响了，但我按了贪睡按钮。"},{"source":"I am not completely awake.","better":"I'm not fully awake yet.","zh":"我还没有完全清醒。"}]}
+  ]
+}
