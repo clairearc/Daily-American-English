@@ -43,25 +43,52 @@ function makeLessonCard(lesson) {
 
   const player = node.querySelector('.audio-player');
   if (lesson.audio) player.src = lesson.audio;
-  else player.closest('.audio-panel').querySelector('.audio-tip').textContent = 'Audio will appear here when available.';
+  else node.querySelector('.audio-tip').textContent = '本课音频暂未生成。';
 
   const dialogue = node.querySelector('.dialogue');
   lesson.dialogue.forEach(turn => {
     const div = document.createElement('div');
     div.className = 'dialogue-turn';
-    div.innerHTML = `<div class="speaker">${escapeHtml(turn.speaker)}</div><p class="en">${escapeHtml(turn.en)}</p><p class="zh">${escapeHtml(turn.zh)}</p>`;
+    div.innerHTML = `
+      <div class="speaker">${escapeHtml(turn.speaker)}</div>
+      <p class="en">${escapeHtml(turn.en)}</p>
+      <p class="zh">${escapeHtml(turn.zh)}</p>
+      ${turn.note ? `<p class="usage-note">${escapeHtml(turn.note)}</p>` : ''}
+    `;
     dialogue.appendChild(div);
   });
 
   const expressions = node.querySelector('.expressions');
   lesson.expressions.forEach(item => {
-    const div = document.createElement('div');
+    const div = document.createElement('article');
     div.className = 'expression';
-    div.innerHTML = `<strong>${escapeHtml(item.term)}</strong><p>${escapeHtml(item.zh)}</p><p>${escapeHtml(item.note)}</p>`;
+    div.innerHTML = `
+      <h4>${escapeHtml(item.term)}</h4>
+      <p class="expression-zh">${escapeHtml(item.zh)}</p>
+      <p class="expression-note">${escapeHtml(item.note)}</p>
+      ${item.example ? `<div class="example-box"><p class="example-en">${escapeHtml(item.example.en)}</p><p class="example-zh">${escapeHtml(item.example.zh)}</p></div>` : ''}
+    `;
     expressions.appendChild(div);
   });
 
-  node.querySelector('.exercise').textContent = lesson.exercise;
+  const review = node.querySelector('.review-note');
+  if (lesson.review) {
+    review.hidden = false;
+    review.textContent = lesson.review;
+  }
+
+  const exercise = node.querySelector('.exercise-content');
+  if (lesson.exercise && typeof lesson.exercise === 'object') {
+    exercise.innerHTML = `
+      ${lesson.exercise.context ? `<p class="exercise-context">${escapeHtml(lesson.exercise.context)}</p>` : ''}
+      ${lesson.exercise.prompt_en ? `<div class="prompt-box"><p class="prompt-en">${escapeHtml(lesson.exercise.prompt_en)}</p>${lesson.exercise.prompt_zh ? `<p class="prompt-zh">${escapeHtml(lesson.exercise.prompt_zh)}</p>` : ''}</div>` : ''}
+      <p class="exercise-task">${escapeHtml(lesson.exercise.task || '')}</p>
+      ${lesson.exercise.targets?.length ? `<p class="targets"><strong>尽量用到：</strong>${lesson.exercise.targets.map(escapeHtml).join(' · ')}</p>` : ''}
+    `;
+  } else {
+    exercise.textContent = lesson.exercise || '';
+  }
+
   return node;
 }
 
