@@ -1,164 +1,136 @@
 const app = document.querySelector('#app');
+const nav = document.querySelector('#curriculumNav');
 const searchInput = document.querySelector('#searchInput');
-const tabs = [...document.querySelectorAll('.tab')];
-const template = document.querySelector('#lessonTemplate');
+let curriculum;
+let currentPart;
 
-let manifest = [];
-let lessons = [];
-let currentView = 'today';
-const favorites = new Set(JSON.parse(localStorage.getItem('dae-favorites') || '[]'));
-
-const saveFavorites = () => localStorage.setItem('dae-favorites', JSON.stringify([...favorites]));
-const prettyDate = value => new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(`${value}T12:00:00`));
-
-async function loadData() {
-  const indexRes = await fetch('lessons/index.json', { cache: 'no-store' });
-  manifest = await indexRes.json();
-  lessons = await Promise.all(manifest.map(async item => {
-    const res = await fetch(`lessons/${item.file}`, { cache: 'no-store' });
-    return res.json();
-  }));
-  lessons.sort((a, b) => b.date.localeCompare(a.date));
-  render();
+async function loadCurriculum() {
+  const res = await fetch('curriculum/index.json', { cache: 'no-store' });
+  curriculum = await res.json();
+  renderNav();
+  const first = curriculum.chapters?.[0]?.units?.[0]?.parts?.[0];
+  if (first) await openPart(first);
 }
 
-function makeLessonCard(lesson) {
-  const node = template.content.cloneNode(true);
-  node.querySelector('.lesson-date').textContent = prettyDate(lesson.date);
-  node.querySelector('.lesson-title').textContent = lesson.title;
-  node.querySelector('.setting').textContent = lesson.setting;
-
-  const favoriteBtn = node.querySelector('.favorite-btn');
-  const updateFavorite = () => {
-    const active = favorites.has(lesson.date);
-    favoriteBtn.textContent = active ? '★' : '☆';
-    favoriteBtn.setAttribute('aria-label', active ? 'Remove from favorites' : 'Add to favorites');
-  };
-  updateFavorite();
-  favoriteBtn.addEventListener('click', () => {
-    favorites.has(lesson.date) ? favorites.delete(lesson.date) : favorites.add(lesson.date);
-    saveFavorites();
-    updateFavorite();
-  });
-
-  const player = node.querySelector('.audio-player');
-  if (lesson.audio) player.src = lesson.audio;
-  else node.querySelector('.audio-tip').textContent = '本课音频暂未生成。';
-
-  const dialogue = node.querySelector('.dialogue');
-  lesson.dialogue.forEach(turn => {
-    const div = document.createElement('div');
-    div.className = 'dialogue-turn';
-    div.innerHTML = `
-      <div class="speaker">${escapeHtml(turn.speaker)}</div>
-      <p class="en">${escapeHtml(turn.en)}</p>
-      <p class="zh">${escapeHtml(turn.zh)}</p>
-      ${turn.note ? `<p class="usage-note">${escapeHtml(turn.note)}</p>` : ''}
-    `;
-    dialogue.appendChild(div);
-  });
-
-  const expressions = node.querySelector('.expressions');
-  lesson.expressions.forEach(item => {
-    const div = document.createElement('article');
-    div.className = 'expression';
-    div.innerHTML = `
-      <h4>${escapeHtml(item.term)}</h4>
-      <p class="expression-zh">${escapeHtml(item.zh)}</p>
-      <p class="expression-note">${escapeHtml(item.note)}</p>
-      ${item.example ? `<div class="example-box"><p class="example-en">${escapeHtml(item.example.en)}</p><p class="example-zh">${escapeHtml(item.example.zh)}</p></div>` : ''}
-    `;
-    expressions.appendChild(div);
-  });
-
-  const review = node.querySelector('.review-note');
-  if (lesson.review) {
-    review.hidden = false;
-    review.textContent = lesson.review;
-  }
-
-  const exercise = node.querySelector('.exercise-content');
-  if (lesson.exercise && typeof lesson.exercise === 'object') {
-    exercise.innerHTML = `
-      ${lesson.exercise.context ? `<p class="exercise-context">${escapeHtml(lesson.exercise.context)}</p>` : ''}
-      ${lesson.exercise.prompt_en ? `<div class="prompt-box"><p class="prompt-en">${escapeHtml(lesson.exercise.prompt_en)}</p>${lesson.exercise.prompt_zh ? `<p class="prompt-zh">${escapeHtml(lesson.exercise.prompt_zh)}</p>` : ''}</div>` : ''}
-      <p class="exercise-task">${escapeHtml(lesson.exercise.task || '')}</p>
-      ${lesson.exercise.targets?.length ? `<p class="targets"><strong>尽量用到：</strong>${lesson.exercise.targets.map(escapeHtml).join(' · ')}</p>` : ''}
-    `;
-  } else {
-    exercise.textContent = lesson.exercise || '';
-  }
-
-  return node;
-}
-
-function render() {
-  const q = searchInput.value.trim().toLowerCase();
-  const matches = lessons.filter(lesson => JSON.stringify(lesson).toLowerCase().includes(q));
-  app.innerHTML = '';
-
-  if (q) return renderHistory(matches, `Search results (${matches.length})`);
-
-  if (currentView === 'today') {
-    if (lessons[0]) app.appendChild(makeLessonCard(lessons[0]));
-    return;
-  }
-
-  if (currentView === 'favorites') {
-    return renderHistory(lessons.filter(l => favorites.has(l.date)), 'Favorites');
-  }
-
-  renderHistory(lessons, 'Lesson History');
-}
-
-function renderHistory(items, heading) {
-  const title = document.createElement('h2');
-  title.textContent = heading;
-  app.appendChild(title);
-
-  if (!items.length) {
-    const empty = document.createElement('div');
-    empty.className = 'empty';
-    empty.textContent = heading === 'Favorites' ? 'No favorites yet. Tap ☆ on a lesson to save it.' : 'No matching lessons.';
-    app.appendChild(empty);
-    return;
-  }
-
-  const list = document.createElement('div');
-  list.className = 'history-list';
-  items.forEach(lesson => {
-    const item = document.createElement('article');
-    item.className = 'history-item';
-    const btn = document.createElement('button');
-    btn.innerHTML = `<p>${prettyDate(lesson.date)}</p><h3>${escapeHtml(lesson.title)}</h3><p>${escapeHtml(lesson.setting)}</p>`;
-    btn.addEventListener('click', () => {
-      app.innerHTML = '';
-      app.appendChild(makeLessonCard(lesson));
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+function renderNav() {
+  nav.innerHTML = '';
+  curriculum.chapters.forEach(chapter => {
+    const chapterWrap = document.createElement('section');
+    chapterWrap.className = 'nav-chapter';
+    chapterWrap.innerHTML = `<h2>Chapter ${chapter.id.split('-').pop()} · ${escapeHtml(chapter.title)}</h2><p>${escapeHtml(chapter.zh)}</p>`;
+    chapter.units.forEach(unit => {
+      const unitWrap = document.createElement('div');
+      unitWrap.className = 'nav-unit';
+      unitWrap.innerHTML = `<h3>Unit ${unit.id.split('-').pop()} · ${escapeHtml(unit.title)}</h3><p>${escapeHtml(unit.zh)}</p>`;
+      unit.parts.forEach(part => {
+        const btn = document.createElement('button');
+        btn.className = 'part-link';
+        btn.textContent = `Part ${part.id.split('-').pop()} · ${part.title}`;
+        btn.addEventListener('click', () => openPart(part));
+        unitWrap.appendChild(btn);
+      });
+      chapterWrap.appendChild(unitWrap);
     });
-    const star = document.createElement('span');
-    star.textContent = favorites.has(lesson.date) ? '★' : '☆';
-    star.setAttribute('aria-hidden', 'true');
-    item.append(btn, star);
-    list.appendChild(item);
+    nav.appendChild(chapterWrap);
   });
-  app.appendChild(list);
+}
+
+async function openPart(meta) {
+  const res = await fetch(meta.file, { cache: 'no-store' });
+  currentPart = await res.json();
+  renderPart(currentPart);
+  document.querySelectorAll('.part-link').forEach(btn => btn.classList.toggle('active', btn.textContent.includes(meta.title)));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderPart(data) {
+  app.innerHTML = '';
+  const article = document.createElement('article');
+  article.className = 'course-part';
+  article.innerHTML = `
+    <header class="part-header">
+      <p class="breadcrumb">Chapter ${data.chapter.number} · ${escapeHtml(data.chapter.title)} / Unit ${data.unit.number} · ${escapeHtml(data.unit.title)}</p>
+      <h2>Part ${data.part.number} · ${escapeHtml(data.part.title)}</h2>
+      <p class="part-zh">${escapeHtml(data.part.zh)}</p>
+      <p class="intro">${escapeHtml(data.intro)}</p>
+      <div class="objectives"><h3>本 Part 学习目标</h3><ul>${data.objectives.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>
+    </header>
+    ${section('Vocabulary', '词汇总表', renderVocabulary(data.vocabulary))}
+    ${section('Scenes', '真实场景会话', renderScenes(data.scenes))}
+    ${section('Expressions', '重点表达与自然说法', renderExpressions(data.expressions))}
+    ${section("Don't Mix These Up", '词义辨析与易错表达', renderComparisons(data.comparisons))}
+    ${section('Useful Lines', '高频实用短句', renderUsefulLines(data.usefulLines))}
+    ${section('Practice', '输出练习', renderPractice(data.practice))}
+  `;
+  app.appendChild(article);
+  applySearch();
+}
+
+function section(en, zh, body) {
+  return `<section class="content-section searchable"><div class="section-title"><span>${en}</span><h3>${zh}</h3></div>${body}</section>`;
+}
+
+function renderVocabulary(items) {
+  return `<div class="vocab-grid">${items.map(item => `
+    <article class="vocab-card searchable">
+      <h4>${escapeHtml(item.term)}</h4>
+      <p class="zh-main">${escapeHtml(item.zh)}</p>
+      ${item.note ? `<p class="note">${escapeHtml(item.note)}</p>` : ''}
+      ${item.example ? `<div class="example"><p>${escapeHtml(item.example.en)}</p><p>${escapeHtml(item.example.zh)}</p></div>` : ''}
+    </article>`).join('')}</div>`;
+}
+
+function renderScenes(scenes) {
+  return scenes.map((scene, i) => `
+    <article class="scene-card searchable">
+      <div class="scene-head"><div><p class="scene-kicker">Scene ${i + 1}</p><h4>${escapeHtml(scene.title)}</h4><p>${escapeHtml(scene.zh)}</p></div></div>
+      ${scene.audio ? `<div class="scene-audio"><span>🎧 对话音频</span><audio controls preload="none" src="${escapeHtml(scene.audio)}"></audio><small>先不看文字听 1 遍 → 看着文字听 1 遍 → shadowing 跟读 1 遍。</small></div>` : ''}
+      <div class="dialogue">${scene.dialogue.map(turn => `<div class="dialogue-turn"><span class="speaker">${escapeHtml(turn.speaker)}</span><p class="en">${escapeHtml(turn.en)}</p><p class="zh">${escapeHtml(turn.zh)}</p></div>`).join('')}</div>
+    </article>`).join('');
+}
+
+function renderExpressions(items) {
+  return `<div class="expression-list">${items.map(item => `
+    <article class="expression-card searchable"><h4>${escapeHtml(item.term)}</h4><p class="zh-main">${escapeHtml(item.zh)}</p>
+      ${item.alternatives?.length ? `<div class="alternatives">${item.alternatives.map(a => `<div><p class="en">${escapeHtml(a.en)}</p><p class="zh">${escapeHtml(a.zh)}</p></div>`).join('')}</div>` : ''}
+    </article>`).join('')}</div>`;
+}
+
+function renderComparisons(items) {
+  return `<div class="comparison-list">${items.map(item => `
+    <article class="comparison-card searchable"><h4>${escapeHtml(item.title)}</h4>
+      ${item.items.map(x => `<div class="compare-row"><strong>${escapeHtml(x.term)}</strong><span>${escapeHtml(x.zh)}</span></div>`).join('')}
+      ${item.example ? `<div class="example"><p>${escapeHtml(item.example.en)}</p><p>${escapeHtml(item.example.zh)}</p></div>` : ''}
+    </article>`).join('')}</div>`;
+}
+
+function renderUsefulLines(items) {
+  return `<div class="useful-lines">${items.map(x => `<div class="line-card searchable"><p class="en">${escapeHtml(x.en)}</p><p class="zh">${escapeHtml(x.zh)}</p></div>`).join('')}</div>`;
+}
+
+function renderPractice(items) {
+  return `<div class="practice-list">${items.map(item => {
+    if (item.type === 'rewrite') {
+      return `<article class="practice-card searchable"><h4>${escapeHtml(item.title)}</h4>${item.items.map(x => `<div class="rewrite"><p class="source">${escapeHtml(x.source)}</p><p class="arrow">→</p><p class="better">${escapeHtml(x.better)}</p><p class="zh">${escapeHtml(x.zh)}</p></div>`).join('')}</article>`;
+    }
+    return `<article class="practice-card searchable"><h4>${escapeHtml(item.title)}</h4><p>${escapeHtml(item.context)}</p><div class="prompt-box"><p class="en">${escapeHtml(item.promptEn)}</p><p class="zh">${escapeHtml(item.promptZh)}</p></div><p>${escapeHtml(item.task)}</p><div class="targets"><strong>尽量用到：</strong>${item.targets.map(x => `<span>${escapeHtml(x)}</span>`).join('')}</div></article>`;
+  }).join('')}</div>`;
+}
+
+function applySearch() {
+  if (!currentPart) return;
+  const q = searchInput.value.trim().toLowerCase();
+  document.querySelectorAll('.searchable').forEach(el => {
+    el.hidden = !!q && !el.textContent.toLowerCase().includes(q);
+  });
 }
 
 function escapeHtml(value = '') {
-  return String(value).replace(/[&<>'"]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#039;', '"': '&quot;' }[char]));
+  return String(value).replace(/[&<>'\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','\"':'&quot;'}[c]));
 }
 
-tabs.forEach(tab => tab.addEventListener('click', () => {
-  currentView = tab.dataset.view;
-  tabs.forEach(t => t.classList.toggle('active', t === tab));
-  searchInput.value = '';
-  render();
-}));
-
-searchInput.addEventListener('input', render);
-
-loadData().catch(error => {
-  console.error(error);
-  app.innerHTML = '<div class="empty">Could not load lessons. Please refresh the page.</div>';
+searchInput.addEventListener('input', applySearch);
+loadCurriculum().catch(err => {
+  console.error(err);
+  app.innerHTML = '<div class="empty">课程加载失败，请刷新页面。</div>';
 });
