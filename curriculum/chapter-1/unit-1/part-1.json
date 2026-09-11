@@ -3,6 +3,7 @@
   "unit": {"number": 1, "title": "In the Morning", "zh": "早晨"},
   "part": {"number": 1, "title": "Waking Up & Being Late", "zh": "起床和迟到"},
   "intro": "这一 Part 帮你掌握从闹钟响、赖床、睡懒觉，到睡过头、赶时间以及描述刚起床状态的一整组自然美式表达。",
+  "heroMedia": {"src":"assets/chapter-1/unit-1/part-1/hero-dc818fed948b.webp","alt":"明亮卧室里，女性刚醒来打哈欠、伸懒腰，床边放着闹钟。","width":1672,"height":941,"markers":[{"term":"alarm / alarm clock","zh":"闹钟","x":61,"y":63},{"term":"wake up","zh":"醒来","x":53,"y":37},{"term":"stretch","zh":"伸展；伸懒腰","x":18,"y":20}]},
   "objectives": [
     "听懂并自然使用起床、赖床、睡过头、迟到相关的高频口语。",
     "区分 wake up / get up、sleep in / oversleep、in a rush / hurry up 等容易混淆的表达。",
@@ -54,6 +55,7 @@
   "scenes": [
     {
       "title":"The Alarm Goes Off",
+      "media": {"src":"assets/chapter-1/unit-1/part-1/alarm-2aac0d52ee9f.webp","alt":"女性躺在床上，困倦地伸手按床边闹钟的顶部按钮。","width":1448,"height":1086,"markers":[{"term":"go off","zh":"（闹钟）响","x":82,"y":78},{"term":"snooze button","zh":"贪睡按钮","x":88,"y":56},{"term":"hit the snooze button","zh":"按下贪睡按钮","x":69,"y":55}]},
       "zh":"闹钟响了，但还是不想起床",
       "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=fd518b0b-157e-4b91-ba8d-6e53c06a6681.wav",
       "dialogue":[
@@ -93,6 +95,7 @@
     },
     {
       "title":"I Overslept",
+      "media": {"src":"assets/chapter-1/unit-1/part-1/overslept-f51798f14760.webp","alt":"女性发现睡过头，在床上惊慌地抓着头发，身旁闹钟响起。","width":1448,"height":1086,"markers":[{"term":"oversleep","zh":"睡过头","x":90,"y":75},{"term":"panic","zh":"惊慌","x":56,"y":27},{"term":"in a rush","zh":"赶时间；匆忙","x":45,"y":73}]},
       "zh":"睡过头，突然发现马上迟到了",
       "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=3c38a237-7020-4018-93c3-199cf7ccd2a2.wav",
       "dialogue":[
@@ -106,6 +109,7 @@
     },
     {
       "title":"Looking Rough in the Morning",
+      "media": {"src":"assets/chapter-1/unit-1/part-1/mirror-8d2c27fce6fe.webp","alt":"女性在镜前指着眼睛下方，观察清晨疲惫的状态。","width":1448,"height":1086,"markers":[{"term":"puffy eyes","zh":"浮肿的眼睛","x":52,"y":25,"targetX":43,"targetY":30},{"term":"dark circles","zh":"黑眼圈","x":25,"y":36,"targetX":35,"targetY":36},{"term":"drowsy","zh":"昏昏欲睡的","x":52,"y":51}]},
       "zh":"没睡好，早晨看起来很疲惫",
       "audio":"https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=6d7e2ab3-cae9-459e-9d83-78735c31b698.wav",
       "dialogue":[

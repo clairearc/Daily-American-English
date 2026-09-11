@@ -84,6 +84,7 @@ function renderPart(data) {
       <h2>Part ${data.part.number} · ${escapeHtml(data.part.title)}</h2>
       <p class="part-zh">${escapeHtml(data.part.zh)}</p>
       <p class="intro">${escapeHtml(data.intro)}</p>
+      ${renderTeachingMedia(data.heroMedia, true)}
       <div class="objectives"><h3>本 Part 学习目标</h3><ul>${data.objectives.map(x => `<li>${escapeHtml(x)}</li>`).join('')}</ul></div>
     </header>
     ${renderJumpNav(data)}
@@ -96,6 +97,8 @@ function renderPart(data) {
   `;
   app.appendChild(article);
   attachVocabInteractions();
+  attachTeachingMedia();
+  renderLessonDirectory();
   applySearch();
 }
 
@@ -106,6 +109,122 @@ function renderJumpNav(data) {
     return `<a href="#${id}">${escapeHtml(en)}${count ? ` · ${count}` : ''}</a>`;
   }).join('')}</nav>`;
 }
+
+// Media is owned by the course renderer, never injected by an observer.
+function renderTeachingMedia(media, hero = false) {
+  if (!media) return '';
+  const markers = media.markers || [];
+  const audioItems = currentPart?.vocabulary || [];
+  return `<figure class="teaching-media${hero ? ' teaching-media--hero' : ''}">
+    <p class="teaching-media-status" role="status">场景图片加载中…</p>
+    <a class="teaching-image-stage" href="${escapeHtml(media.src)}" target="_blank" rel="noopener" aria-label="查看大图：${escapeHtml(media.alt)}">
+      <img src="${escapeHtml(media.src)}" alt="${escapeHtml(media.alt)}" width="${Number(media.width)}" height="${Number(media.height)}" decoding="async" loading="eager">
+      <svg class="teaching-leaders" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">${markers.filter(marker => Number.isFinite(marker.targetX) && Number.isFinite(marker.targetY)).map(marker => `<line x1="${Number(marker.x)}" y1="${Number(marker.y)}" x2="${Number(marker.targetX)}" y2="${Number(marker.targetY)}" vector-effect="non-scaling-stroke" />`).join('')}</svg>
+      ${markers.map((marker, i) => `<span class="teaching-marker" aria-hidden="true" style="left:${Math.max(0, Math.min(100, Number(marker.x)))}%;top:${Math.max(0, Math.min(100, Number(marker.y)))}%">${i + 1}</span>`).join('')}
+    </a>
+    <figcaption>
+      <div class="teaching-media-heading">看图学表达 <small>点击图片查看大图 ↗</small></div>
+      <ol class="teaching-legend">${markers.map(marker => {
+        const index = audioItems.findIndex(item => item.term === marker.term);
+        const hasAudio = index >= 0 && currentVocabAudio?.audioUrl && currentVocabAudio?.segments?.[index];
+        return `<li><span><strong>${escapeHtml(marker.term)}</strong><small>${escapeHtml(marker.zh)}</small></span>${hasAudio ? `<button class="teaching-audio us-speak" type="button" data-audio-index="${index}" aria-label="播放 ${escapeHtml(marker.term)} 的美式发音">🔊 US</button>` : ''}</li>`;
+      }).join('')}</ol>
+    </figcaption>
+  </figure>`;
+}
+
+function attachTeachingMedia() {
+  app.querySelectorAll('.teaching-media').forEach(figure => {
+    const img = figure.querySelector('img');
+    const status = figure.querySelector('.teaching-media-status');
+    const loaded = () => {
+      if (!img.naturalWidth) return failed();
+      figure.classList.add('is-ready');
+      status.hidden = true;
+    };
+    const failed = () => {
+      figure.classList.remove('is-ready');
+      status.hidden = false;
+      status.textContent = '图片暂时无法显示，仍可使用下方表达与点读。';
+    };
+    img.addEventListener('load', loaded, { once: true });
+    img.addEventListener('error', failed, { once: true });
+    // Cached images can finish before the handlers are attached.
+    if (img.complete) img.naturalWidth ? loaded() : failed();
+  });
+  app.querySelectorAll('.teaching-audio').forEach(button => {
+    button.addEventListener('click', () => playVocabularySegment(Number(button.dataset.audioIndex), button));
+  });
+}
+
+const desktopDirectory = window.matchMedia('(min-width: 1100px)');
+let lessonDirectory = null;
+let directoryFrame = null;
+
+function renderLessonDirectory() {
+  lessonDirectory?.remove();
+  lessonDirectory = document.createElement('details');
+  lessonDirectory.className = 'lesson-directory';
+  lessonDirectory.open = desktopDirectory.matches;
+  lessonDirectory.innerHTML = `<summary>本课目录</summary>
+    <nav aria-label="本课六模块目录"><p class="lesson-directory-title">本课目录</p>
+      ${sectionMeta.map(([en, zh, id]) => `<a href="#${id}"><span>${escapeHtml(en)}</span><small>${escapeHtml(zh)}</small></a>`).join('')}
+    </nav>`;
+  document.querySelector(desktopDirectory.matches ? '.course-layout' : '.toolbar').appendChild(lessonDirectory);
+  lessonDirectory.addEventListener('toggle', updateLessonDirectory);
+  lessonDirectory.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', event => {
+      const section = document.getElementById(link.hash.slice(1));
+      if (!section || section.hidden) return;
+      event.preventDefault();
+      if (!desktopDirectory.matches) lessonDirectory.open = false;
+      section.setAttribute('tabindex', '-1');
+      section.focus({ preventScroll: true });
+      section.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
+      history.replaceState(null, '', link.hash);
+    });
+  });
+  updateLessonDirectory();
+}
+
+function updateLessonDirectory() {
+  if (!lessonDirectory) return;
+  const sections = sectionMeta.map(([, , id]) => document.getElementById(id)).filter(section => section && !section.hidden);
+  let active = sections[0]?.id;
+  sections.forEach(section => {
+    if (section.getBoundingClientRect().top <= Math.max(130, innerHeight * 0.25)) active = section.id;
+  });
+  lessonDirectory.querySelectorAll('a').forEach(link => {
+    const section = document.getElementById(link.hash.slice(1));
+    link.hidden = !section || section.hidden;
+    if (link.hash === `#${active}`) link.setAttribute('aria-current', 'location');
+    else link.removeAttribute('aria-current');
+  });
+}
+
+window.addEventListener('scroll', () => {
+  if (directoryFrame !== null) return;
+  directoryFrame = requestAnimationFrame(() => {
+    directoryFrame = null;
+    updateLessonDirectory();
+  });
+}, { passive: true });
+desktopDirectory.addEventListener('change', event => {
+  if (lessonDirectory) {
+    lessonDirectory.open = event.matches;
+    document.querySelector(event.matches ? '.course-layout' : '.toolbar').appendChild(lessonDirectory);
+  }
+});
+window.addEventListener('resize', updateLessonDirectory);
+document.addEventListener('click', event => {
+  if (!desktopDirectory.matches && lessonDirectory && !lessonDirectory.contains(event.target)) lessonDirectory.open = false;
+});
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && !desktopDirectory.matches && lessonDirectory?.open) {
+    lessonDirectory.open = false;
+    lessonDirectory.querySelector('summary').focus({ preventScroll: true });
+  }
+});
 
 function section(en, zh, body, id, count) {
   return `<section id="${id}" class="content-section searchable"><div class="section-title"><div class="section-title-text"><span>${en}</span><h3>${zh}</h3></div>${Number.isFinite(count) ? `<div class="section-count">${count} 项</div>` : ''}</div>${body}</section>`;
@@ -205,6 +324,7 @@ function renderScenes(scenes = []) {
   return scenes.map((scene, i) => `
     <article class="scene-card searchable">
       <div class="scene-head"><div><p class="scene-kicker">Scene ${i + 1}</p><h4>${escapeHtml(scene.title)}</h4><p>${escapeHtml(scene.zh)}</p></div></div>
+      ${renderTeachingMedia(scene.media)}
       ${scene.audio ? `<div class="scene-audio"><span>🎧 对话音频</span><audio controls preload="none" src="${escapeHtml(scene.audio)}"></audio><small>先不看文字听 1 遍 → 看着文字听 1 遍 → shadowing 跟读 1 遍。</small></div>` : ''}
       <div class="dialogue">${scene.dialogue.map(turn => `<div class="dialogue-turn"><span class="speaker">${escapeHtml(turn.speaker)}</span><p class="en">${escapeHtml(turn.en)}</p><p class="zh">${escapeHtml(turn.zh)}</p></div>`).join('')}</div>
     </article>`).join('');
@@ -244,6 +364,7 @@ function applySearch() {
   document.querySelectorAll('.searchable').forEach(el => {
     el.hidden = !!q && !el.textContent.toLowerCase().includes(q);
   });
+  updateLessonDirectory();
 }
 
 function openNav() {

@@ -1,5 +1,7 @@
 # Daily American English · Codex 交接文档
 
+> 修复分支更新：先查看 [07-repair-verification.md](07-repair-verification.md)。下面关于重复媒体脚本、SVG 和导航缺失的“当前状态”是修复前记录；以 07 及实际入口为准。
+
 > **Codex 请先完整阅读本文件，再阅读同目录 01–06。不要先修改代码。**
 
 仓库：`clairearc/Daily-American-English`
