@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f7f4ee" />
+  <title>Daily American English</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div>
+      <p class="eyebrow">Everyday American English</p>
+      <h1>Daily American English</h1>
+      <p class="subtitle">7–10 minute practice · natural U.S. English · 中英对照</p>
+    </div>
+    <nav class="tabs" aria-label="Primary">
+      <button class="tab active" data-view="today">Today</button>
+      <button class="tab" data-view="history">History</button>
+      <button class="tab" data-view="favorites">Favorites</button>
+    </nav>
+  </header>
+
+  <main class="page-shell">
+    <section class="toolbar">
+      <label class="search-wrap">
+        <span class="sr-only">Search lessons</span>
+        <input id="searchInput" type="search" placeholder="Search expressions or situations…" autocomplete="off" />
+      </label>
+    </section>
+
+    <section id="app" aria-live="polite">
+      <div class="loading">Loading today’s practice…</div>
+    </section>
+  </main>
+
+  <template id="lessonTemplate">
+    <article class="lesson-card">
+      <div class="lesson-topline">
+        <div>
+          <p class="lesson-date"></p>
+          <h2 class="lesson-title"></h2>
+        </div>
+        <button class="favorite-btn" aria-label="Add to favorites">☆</button>
+      </div>
+
+      <p class="setting"></p>
+
+      <section class="audio-panel">
+        <div>
+          <p class="section-kicker">🎧 对话音频</p>
+          <p class="audio-tip">先不看文字听 1 遍 → 看着文字听 1 遍 → 最后 shadowing 跟读 1 遍。</p>
+        </div>
+        <audio class="audio-player" controls preload="none"></audio>
+      </section>
+
+      <section>
+        <h3>Dialogue</h3>
+        <div class="dialogue"></div>
+      </section>
+
+      <section>
+        <h3>Useful Expressions</h3>
+        <div class="expressions"></div>
+      </section>
+
+      <section class="exercise-section">
+        <h3>Mini Role-play</h3>
+        <p class="exercise"></p>
+      </section>
+    </article>
+  </template>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
