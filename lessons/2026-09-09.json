@@ -1,23 +1,30 @@
 {
   "date": "2026-09-09",
-  "title": "Finding a Seat at a Coffee Shop",
-  "setting": "The coffee shop is crowded, and you ask whether the empty seat next to someone is available.",
+  "title": "咖啡店里找座位 · Finding a Seat at a Coffee Shop",
+  "setting": "咖啡店非常拥挤，你看到陌生人旁边有一个空位，于是先问能不能坐。接着两个人很自然地聊了几句排队的事。这类 small talk 在美国日常生活和美剧里非常常见。",
   "audio": "https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=38e9f8cb-bd3f-4cc3-8e0b-ad2d3276de5a.wav",
   "dialogue": [
-    {"speaker":"A","en":"Hey, do you know if this seat's taken?","zh":"嗨，你知道这个座位有人吗？"},
-    {"speaker":"B","en":"No, go ahead. I'm just waiting for my drink.","zh":"没有，你坐吧。我只是在等我的饮料。"},
-    {"speaker":"A","en":"Thanks. It's packed in here today.","zh":"谢谢。今天这里人真多。"},
-    {"speaker":"B","en":"I know. I almost turned around when I saw the line.","zh":"就是啊。我看到排队那么长，差点直接掉头走了。"},
-    {"speaker":"A","en":"Same. I figured I'd give it a few minutes and see if it moved.","zh":"我也是。我想着先等几分钟，看看队伍会不会往前走。"},
-    {"speaker":"B","en":"Good call. It actually went pretty fast.","zh":"这决定不错。其实队伍走得还挺快的。"},
-    {"speaker":"A","en":"Yeah, no worries. I wasn't in a huge rush anyway.","zh":"是啊，没事。反正我也不是特别赶时间。"}
+    {"speaker":"A","en":"Hey, do you know if this seat's taken?","zh":"嗨，你知道这个座位有人吗？","note":"Is this seat taken? 是询问空位最地道的说法之一。"},
+    {"speaker":"B","en":"No, go ahead. I'm just waiting for my drink.","zh":"没有，你坐吧。我只是在等我的饮料。","note":"Go ahead. 在这里不是“往前走”，而是“可以啊 / 请便”。"},
+    {"speaker":"A","en":"Thanks. It's packed in here today.","zh":"谢谢。今天这里人真多。","note":"packed 在口语中经常表示某个地方“挤满了人”。"},
+    {"speaker":"B","en":"I know. I almost turned around when I saw the line.","zh":"就是啊。我看到排队那么长，差点直接掉头走了。","note":"turn around 在这里指“掉头离开”。"},
+    {"speaker":"A","en":"Same. I figured I'd give it a few minutes and see if it moved.","zh":"我也是。我想着先等几分钟，看看队伍会不会往前走。","note":"I figured I'd… 是很自然的美式口语，意思接近“我想着 / 我寻思着就……”。"},
+    {"speaker":"B","en":"Good call. It actually went pretty fast.","zh":"这决定不错。其实队伍走得还挺快的。","note":"Good call. = “这个决定不错 / 做得对”。"},
+    {"speaker":"A","en":"Yeah, no worries. I wasn't in a huge rush anyway.","zh":"是啊，没事。反正我也不是特别赶时间。","note":"in a rush = “赶时间”。"}
   ],
   "expressions": [
-    {"term":"Is this seat taken?","zh":"这个座位有人吗？","note":"One of the most natural ways to ask about an empty seat."},
-    {"term":"It's packed.","zh":"人很多；挤满了。","note":"Very common for restaurants, stores, bars, trains, and events."},
-    {"term":"I figured I'd…","zh":"我想着我就……","note":"Casual and common in everyday American conversation."},
-    {"term":"Good call.","zh":"好主意 / 这个决定不错。","note":"Used to approve of someone's choice or judgment."},
-    {"term":"in a rush","zh":"赶时间。","note":"A high-frequency phrase: I'm kind of in a rush."}
+    {"term":"Is this seat taken?","zh":"“这个座位有人吗？”","note":"不要直译成 Does anyone sit here?；前者是美国人更自然的固定说法。","example":{"en":"Excuse me, is this seat taken?","zh":"不好意思，这个座位有人吗？"}},
+    {"term":"It's packed.","zh":"“人挤爆了 / 非常拥挤。”","note":"餐厅、商店、酒吧、地铁、活动现场都很常用。","example":{"en":"The restaurant was packed last night.","zh":"昨晚那家餐厅挤满了人。"}},
+    {"term":"I figured I'd…","zh":"“我想着我就……”","note":"比 I decided to… 更随意、更有口语感。","example":{"en":"I figured I'd grab some coffee before work.","zh":"我想着上班前买杯咖啡。"}},
+    {"term":"Good call.","zh":"“好主意 / 这个决定做得好。”","note":"常用于认可对方刚刚做出的选择。","example":{"en":"You waited a few minutes? Good call.","zh":"你等了几分钟？这个决定不错。"}},
+    {"term":"in a rush","zh":"“赶时间。”","note":"日常口语高频表达。","example":{"en":"Sorry, I'm kind of in a rush.","zh":"不好意思，我有点赶时间。"}}
   ],
-  "exercise": "You enter a crowded coffee shop and see an empty seat next to me. Say 2–3 natural English sentences: ask whether the seat is taken, comment that the place is packed, and mention that you're not in a big rush."
+  "review": "今天还复习了 No worries。这个表达值得反复练，目标是让它在真实对话里形成条件反射，而不是只停留在“认识”的程度。",
+  "exercise": {
+    "context": "你走进一家很拥挤的咖啡店，看到我旁边有个空位。",
+    "prompt_en": "Hey there.",
+    "prompt_zh": "嗨。",
+    "task": "请用 2–3 句英文：先问这个座位有没有人，再随口评论一下今天咖啡店人很多，最后可以说你其实不太赶时间。",
+    "targets": ["Is this seat taken?", "packed", "in a rush"]
+  }
 }
