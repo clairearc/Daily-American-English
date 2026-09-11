@@ -14,7 +14,8 @@
               "id": "part-1",
               "title": "Waking Up & Being Late",
               "zh": "起床和迟到",
-              "file": "curriculum/chapter-1/unit-1/part-1.json"
+              "file": "curriculum/chapter-1/unit-1/part-1.json",
+              "audioFile": "curriculum/chapter-1/unit-1/part-1-audio.json"
             }
           ]
         }
