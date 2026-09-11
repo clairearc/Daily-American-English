@@ -4,8 +4,16 @@ const searchInput = document.querySelector('#searchInput');
 const navToggle = document.querySelector('#navToggle');
 const sidebarClose = document.querySelector('#sidebarClose');
 const sidebarOverlay = document.querySelector('#sidebarOverlay');
+const scrollTopBtn = document.querySelector('#scrollTopBtn');
+const scrollBottomBtn = document.querySelector('#scrollBottomBtn');
 let curriculum;
 let currentPart;
+let currentVocabAudio = null;
+
+const vocabPlayer = new Audio();
+vocabPlayer.preload = 'metadata';
+let vocabStopAt = null;
+let activeVocabButton = null;
 
 const sectionMeta = [
   ['Vocabulary', '词汇总表', 'vocabulary'],
@@ -48,8 +56,18 @@ function renderNav() {
 }
 
 async function openPart(meta) {
-  const res = await fetch(meta.file, { cache: 'no-store' });
-  currentPart = await res.json();
+  stopVocabularyAudio();
+  const partRes = await fetch(meta.file, { cache: 'no-store' });
+  currentPart = await partRes.json();
+  currentVocabAudio = null;
+  if (meta.audioFile) {
+    try {
+      const audioRes = await fetch(meta.audioFile, { cache: 'no-store' });
+      if (audioRes.ok) currentVocabAudio = await audioRes.json();
+    } catch (err) {
+      console.warn('Vocabulary audio metadata could not be loaded.', err);
+    }
+  }
   renderPart(currentPart);
   document.querySelectorAll('.part-link').forEach(btn => btn.classList.toggle('active', btn.textContent.includes(meta.title)));
   closeNav();
@@ -94,17 +112,24 @@ function section(en, zh, body, id, count) {
 }
 
 function renderVocabulary(items = []) {
-  return `<div class="vocab-grid">${items.map((item, index) => `
+  const audioSegments = currentVocabAudio?.segments || [];
+  return `<div class="vocab-grid">${items.map((item, index) => {
+    const hasAudio = Boolean(currentVocabAudio?.audioUrl && audioSegments[index]);
+    return `
     <article class="vocab-card searchable">
-      <button class="vocab-summary" type="button" aria-expanded="false" aria-controls="vocab-detail-${index}">
-        <span><span class="vocab-term">${escapeHtml(item.term)}</span><span class="vocab-zh">${escapeHtml(item.zh)}</span></span>
-        <span class="vocab-chevron" aria-hidden="true">⌄</span>
-      </button>
+      <div class="vocab-row">
+        <button class="vocab-summary" type="button" aria-expanded="false" aria-controls="vocab-detail-${index}">
+          <span><span class="vocab-term">${escapeHtml(item.term)}</span><span class="vocab-zh">${escapeHtml(item.zh)}</span></span>
+          <span class="vocab-chevron" aria-hidden="true">⌄</span>
+        </button>
+        ${hasAudio ? `<button class="vocab-audio-btn" type="button" data-audio-index="${index}" aria-label="播放 ${escapeHtml(item.term)} 的美式发音" title="播放美式发音"><span aria-hidden="true">🔊</span></button>` : ''}
+      </div>
       <div class="vocab-detail" id="vocab-detail-${index}">
         ${item.note ? `<p class="note">${escapeHtml(item.note)}</p>` : ''}
         ${item.example ? `<div class="example"><p>${escapeHtml(item.example.en)}</p><p>${escapeHtml(item.example.zh)}</p></div>` : '<p class="note">点击词条可收起或展开详细说明。</p>'}
       </div>
-    </article>`).join('')}</div>`;
+    </article>`;
+  }).join('')}</div>`;
 }
 
 function attachVocabInteractions() {
@@ -115,7 +140,66 @@ function attachVocabInteractions() {
       btn.setAttribute('aria-expanded', String(open));
     });
   });
+  document.querySelectorAll('.vocab-audio-btn').forEach(btn => {
+    btn.addEventListener('click', event => {
+      event.stopPropagation();
+      playVocabularySegment(Number(btn.dataset.audioIndex), btn);
+    });
+  });
 }
+
+function playVocabularySegment(index, button) {
+  const segment = currentVocabAudio?.segments?.[index];
+  const url = currentVocabAudio?.audioUrl;
+  if (!segment || !url) return;
+
+  if (activeVocabButton === button && !vocabPlayer.paused) {
+    stopVocabularyAudio();
+    return;
+  }
+
+  stopVocabularyAudio(false);
+  activeVocabButton = button;
+  button.classList.add('playing');
+  button.setAttribute('aria-pressed', 'true');
+  vocabStopAt = Number(segment.end) + 0.08;
+
+  const startPlayback = () => {
+    try {
+      vocabPlayer.currentTime = Math.max(0, Number(segment.start) - 0.03);
+      const playPromise = vocabPlayer.play();
+      if (playPromise?.catch) playPromise.catch(() => stopVocabularyAudio());
+    } catch (err) {
+      console.warn('Vocabulary audio could not be played.', err);
+      stopVocabularyAudio();
+    }
+  };
+
+  if (vocabPlayer.src !== url) {
+    vocabPlayer.src = url;
+    vocabPlayer.load();
+  }
+  if (vocabPlayer.readyState >= 1) startPlayback();
+  else vocabPlayer.addEventListener('loadedmetadata', startPlayback, { once: true });
+}
+
+function stopVocabularyAudio(resetTime = true) {
+  vocabPlayer.pause();
+  if (resetTime && Number.isFinite(vocabPlayer.currentTime)) {
+    try { vocabPlayer.currentTime = 0; } catch (_) {}
+  }
+  vocabStopAt = null;
+  if (activeVocabButton) {
+    activeVocabButton.classList.remove('playing');
+    activeVocabButton.setAttribute('aria-pressed', 'false');
+  }
+  activeVocabButton = null;
+}
+
+vocabPlayer.addEventListener('timeupdate', () => {
+  if (vocabStopAt !== null && vocabPlayer.currentTime >= vocabStopAt) stopVocabularyAudio();
+});
+vocabPlayer.addEventListener('ended', () => stopVocabularyAudio());
 
 function renderScenes(scenes = []) {
   return scenes.map((scene, i) => `
@@ -179,6 +263,8 @@ searchInput.addEventListener('input', applySearch);
 navToggle?.addEventListener('click', () => document.body.classList.contains('nav-open') ? closeNav() : openNav());
 sidebarClose?.addEventListener('click', closeNav);
 sidebarOverlay?.addEventListener('click', closeNav);
+scrollTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+scrollBottomBtn?.addEventListener('click', () => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }));
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
 loadCurriculum().catch(err => {
