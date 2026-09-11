@@ -21,6 +21,7 @@
   function speak(text, button){
     if (!('speechSynthesis' in window) || !text) return;
     window.speechSynthesis.cancel();
+    window.speechSynthesis.resume();
     document.querySelectorAll('.us-speak.playing').forEach(b=>b.classList.remove('playing'));
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'en-US';
@@ -32,7 +33,7 @@
       const clear=()=>button.classList.remove('playing');
       u.onend=clear; u.onerror=clear;
     }
-    window.speechSynthesis.speak(u);
+    setTimeout(() => window.speechSynthesis.speak(u), 20);
   }
   function makeSpeakButton(text, full=false){
     const b=document.createElement('button');
@@ -55,7 +56,7 @@
   }
   function mediaFigure(cfg, hero=false){
     const wrap=document.createElement('div'); wrap.className=hero?'v2-media v2-hero':'v2-media v2-scene-media';
-    const img=document.createElement('img'); img.src=cfg.src+'?v=20260911e'; img.alt=cfg.alt; img.decoding='async'; img.loading=hero?'eager':'lazy';
+    const img=document.createElement('img'); img.src=cfg.src+'?v=20260911g'; img.alt=cfg.alt; img.decoding='async'; img.loading=hero?'eager':'lazy';
     img.addEventListener('error',()=>{ wrap.remove(); });
     img.addEventListener('load',()=>{ wrap.classList.add('loaded'); });
     const stage=document.createElement('div'); stage.className='v2-image-stage'; stage.appendChild(img);
