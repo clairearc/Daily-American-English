@@ -1,23 +1,30 @@
 {
   "date": "2026-09-11",
-  "title": "Rescheduling an Appointment",
-  "setting": "You need to move an appointment because something came up at work.",
+  "title": "临时改预约时间 · Rescheduling an Appointment",
+  "setting": "你原本约了下午的理发、牙医或美容预约，但工作上临时有事，需要打电话把预约往后推一点。这类 rescheduling 对话在美国日常生活里非常常见。",
   "audio": "https://resource2.heygen.ai/text_to_speech/6870446e0ccf4bbeaa2fb63b202a1d4c/88bb9ee1c81b466eb2a08fdde86d3619/id=4f94f07d-0e10-44d5-bbaa-e8d6b4bbf084.wav",
   "dialogue": [
-    {"speaker":"A","en":"Hey, any chance I could push my appointment back a little?","zh":"嗨，请问我能不能把预约稍微往后推一点？"},
-    {"speaker":"B","en":"Sure. What time were you hoping for?","zh":"当然。你希望改到几点？"},
-    {"speaker":"A","en":"Would four-thirty work? Something came up at work.","zh":"四点半可以吗？工作上临时出了点事。"},
-    {"speaker":"B","en":"Let me check. Yeah, we can fit you in at four-thirty.","zh":"我查一下。可以，我们能把你安排在四点半。"},
-    {"speaker":"A","en":"Perfect. I appreciate it. Sorry for the last-minute change.","zh":"太好了，非常感谢。不好意思这么临时改时间。"},
-    {"speaker":"B","en":"No worries. Just try to get here about ten minutes early.","zh":"没关系。尽量提前十分钟左右到就行。"},
-    {"speaker":"A","en":"Will do. Thanks for working with me.","zh":"好的，会的。谢谢你愿意配合我调整。"}
+    {"speaker":"A","en":"Hey, any chance I could push my appointment back a little?","zh":"嗨，请问我能不能把预约稍微往后推一点？","note":"Any chance I could…? 是很自然、比较委婉的请求方式。"},
+    {"speaker":"B","en":"Sure. What time were you hoping for?","zh":"当然。你希望改到几点？","note":"What were you hoping for? 比直接问 What time do you want? 更柔和自然。"},
+    {"speaker":"A","en":"Would four-thirty work? Something came up at work.","zh":"四点半可以吗？工作上临时出了点事。","note":"Something came up. 是非常实用的口语，表示“临时有事”。"},
+    {"speaker":"B","en":"Let me check. Yeah, we can fit you in at four-thirty.","zh":"我查一下。可以，我们能把你安排在四点半。","note":"fit someone in 指在已经比较满的日程里“挤出时间安排某人”。"},
+    {"speaker":"A","en":"Perfect. I appreciate it. Sorry for the last-minute change.","zh":"太好了，非常感谢。不好意思这么临时改时间。","note":"last-minute 指“最后一刻的；临时的”。"},
+    {"speaker":"B","en":"No worries. Just try to get here about ten minutes early.","zh":"没关系。尽量提前十分钟左右到就行。","note":"No worries 是非常自然的轻松回应。"},
+    {"speaker":"A","en":"Will do. Thanks for working with me.","zh":"好的，会的。谢谢你愿意配合我调整。","note":"Will do. 是 I will do that. 更自然、更简洁的口语版本。"}
   ],
   "expressions": [
-    {"term":"Any chance I could…?","zh":"不知道我能不能……？","note":"A natural, polite way to ask for a favor or small accommodation."},
-    {"term":"Something came up.","zh":"临时有事 / 突然出了点状况。","note":"Very common when you do not need to explain the details."},
-    {"term":"fit someone in","zh":"挤出时间安排某人。","note":"Common for appointments, doctors, salons, repairs, and schedules."},
-    {"term":"last-minute","zh":"临时的；最后一刻才发生的。","note":"Often used in phrases like a last-minute change or cancellation."},
-    {"term":"Will do.","zh":"好的 / 没问题，我会的。","note":"A concise, natural response after someone gives you a simple instruction."}
+    {"term":"Any chance I could…?","zh":"“不知道我能不能……？”","note":"很适合提出稍微麻烦对方的请求，语气礼貌又不生硬。","example":{"en":"Any chance I could leave a little early today?","zh":"今天我能不能稍微早走一点？"}},
+    {"term":"Something came up.","zh":"“临时有事 / 突然出了点状况。”","note":"美国人经常用它解释为什么迟到、取消或改约，而且不需要交代具体私事。","example":{"en":"Sorry, something came up.","zh":"抱歉，临时出了点事。"}},
+    {"term":"fit someone in","zh":"“挤出时间安排某人。”","note":"常见于医生、理发店、维修等预约场景。","example":{"en":"Can you fit me in tomorrow?","zh":"你们明天能不能挤个时间给我？"}},
+    {"term":"last-minute","zh":"“临时的；最后一刻才发生的。”","note":"常见搭配有 a last-minute change 和 a last-minute cancellation。","example":{"en":"Sorry for the last-minute change.","zh":"抱歉这么临时改动。"}},
+    {"term":"Will do.","zh":"“好的 / 没问题，我会的。”","note":"对方给你一个简单要求后，用它比完整回答 Yes, I will do that. 更像自然美式口语。","example":{"en":"Please get here ten minutes early. — Will do.","zh":"请提前十分钟到。——好的。"}}
   ],
-  "exercise": "You have a 3:00 PM dentist appointment, but something came up. Ask to move it to 4:00 PM in 2–3 natural English sentences. Try to use: Any chance I could…? / Something came up / Would four o’clock work?"
+  "review": "今天同时复习了之前练过的 I appreciate it 和 No worries。注意它们已经开始成为“高频循环词”：目标不是认识，而是让你在真实对话中不思考就能说出来。",
+  "exercise": {
+    "context": "现在你原本约了 3:00 PM 的牙医，但突然有事，想改成 4:00 PM。",
+    "prompt_en": "Receptionist: Hi, how can I help you?",
+    "prompt_zh": "接待员：你好，有什么可以帮你的吗？",
+    "task": "请你用 2–3 句自然英文回答。",
+    "targets": ["Any chance I could…?", "Something came up", "Would four o’clock work?"]
+  }
 }
