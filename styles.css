@@ -83,6 +83,10 @@ a{color:inherit}
   .lesson-directory nav{position:static;width:160px;max-height:calc(78dvh - 180px);margin-top:8px;padding:6px}
 }
 .vocab-ipa{display:block;margin:4px 0;color:var(--muted);font-size:.8rem;line-height:1.5;font-weight:400}
+.section-actions{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:8px}
+.vocab-toggle-all{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--paper);color:var(--accent);font:inherit;font-size:.8rem;font-weight:700;white-space:nowrap;cursor:pointer}
+.vocab-toggle-all:hover{background:var(--accent-soft)}
+.vocab-toggle-all:focus-visible{outline:3px solid #356d8b;outline-offset:3px}
 @media(max-width:620px){
   .lesson-directory summary{padding:10px;font-size:.78rem}
   .teaching-legend small{display:block}

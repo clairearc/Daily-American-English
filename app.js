@@ -227,7 +227,7 @@ document.addEventListener('keydown', event => {
 });
 
 function section(en, zh, body, id, count) {
-  return `<section id="${id}" class="content-section searchable"><div class="section-title"><div class="section-title-text"><span>${en}</span><h3>${zh}</h3></div>${Number.isFinite(count) ? `<div class="section-count">${count} 项</div>` : ''}</div>${body}</section>`;
+  return `<section id="${id}" class="content-section searchable"><div class="section-title"><div class="section-title-text"><span>${en}</span><h3>${zh}</h3></div><div class="section-actions">${Number.isFinite(count) ? `<div class="section-count">${count} 项</div>` : ''}${id === 'vocabulary' && count ? '<button type="button" class="vocab-toggle-all" aria-expanded="false">全部展开</button>' : ''}</div></div>${body}</section>`;
 }
 
 function renderVocabulary(items = []) {
@@ -252,11 +252,29 @@ function renderVocabulary(items = []) {
 }
 
 function attachVocabInteractions() {
+  const toggleAll = document.querySelector('.vocab-toggle-all');
+  const summaries = [...document.querySelectorAll('.vocab-summary')];
+  const syncToggleAll = () => {
+    if (!toggleAll) return;
+    const allOpen = summaries.length > 0 && summaries.every(btn => btn.getAttribute('aria-expanded') === 'true');
+    toggleAll.textContent = allOpen ? '全部收起' : '全部展开';
+    toggleAll.setAttribute('aria-expanded', String(allOpen));
+  };
+  toggleAll?.setAttribute('aria-controls', summaries.map(btn => btn.getAttribute('aria-controls')).join(' '));
+  toggleAll?.addEventListener('click', () => {
+    const open = toggleAll.getAttribute('aria-expanded') !== 'true';
+    summaries.forEach(btn => {
+      btn.closest('.vocab-card').classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', String(open));
+    });
+    syncToggleAll();
+  });
   document.querySelectorAll('.vocab-summary').forEach(btn => {
     btn.addEventListener('click', () => {
       const card = btn.closest('.vocab-card');
       const open = card.classList.toggle('open');
       btn.setAttribute('aria-expanded', String(open));
+      syncToggleAll();
     });
   });
   document.querySelectorAll('.vocab-audio-btn').forEach(btn => {
