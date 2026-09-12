@@ -19,6 +19,15 @@ media = [course.pop('heroMedia')]
 for scene in course['scenes']:
     if 'media' in scene:
         media.append(scene.pop('media'))
+pronounced = 0
+for item in course['vocabulary']:
+    pronunciation = item.pop('pronunciation', None)
+    if pronunciation:
+        assert set(pronunciation) == {'word', 'ipa'}
+        assert pronunciation['word'] in item['term'].split()
+        assert pronunciation['ipa'].startswith('/') and pronunciation['ipa'].endswith('/')
+        pronounced += 1
+assert pronounced >= 16, 'Expected pronunciation help for difficult words and phrases'
 assert course == original_course, 'Course text or structure changed'
 assert len(media) == 4
 terms = {item['term'] for item in course['vocabulary']}

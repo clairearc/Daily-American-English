@@ -165,8 +165,8 @@ function renderLessonDirectory() {
   lessonDirectory?.remove();
   lessonDirectory = document.createElement('details');
   lessonDirectory.className = 'lesson-directory';
-  lessonDirectory.open = desktopDirectory.matches;
-  lessonDirectory.innerHTML = `<summary>本课目录</summary>
+  lessonDirectory.open = false;
+  lessonDirectory.innerHTML = `<summary>本课目录 <span aria-hidden="true">☰</span></summary>
     <nav aria-label="本课六模块目录"><p class="lesson-directory-title">本课目录</p>
       ${sectionMeta.map(([en, zh, id]) => `<a href="#${id}"><span>${escapeHtml(en)}</span><small>${escapeHtml(zh)}</small></a>`).join('')}
     </nav>`;
@@ -177,7 +177,7 @@ function renderLessonDirectory() {
       const section = document.getElementById(link.hash.slice(1));
       if (!section || section.hidden) return;
       event.preventDefault();
-      if (!desktopDirectory.matches) lessonDirectory.open = false;
+      lessonDirectory.open = false;
       section.setAttribute('tabindex', '-1');
       section.focus({ preventScroll: true });
       section.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
@@ -211,16 +211,16 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 desktopDirectory.addEventListener('change', event => {
   if (lessonDirectory) {
-    lessonDirectory.open = event.matches;
+    lessonDirectory.open = false;
     document.querySelector(event.matches ? '.course-layout' : '.toolbar').appendChild(lessonDirectory);
   }
 });
 window.addEventListener('resize', updateLessonDirectory);
 document.addEventListener('click', event => {
-  if (!desktopDirectory.matches && lessonDirectory && !lessonDirectory.contains(event.target)) lessonDirectory.open = false;
+  if (lessonDirectory && !lessonDirectory.contains(event.target)) lessonDirectory.open = false;
 });
 document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && !desktopDirectory.matches && lessonDirectory?.open) {
+  if (event.key === 'Escape' && lessonDirectory?.open) {
     lessonDirectory.open = false;
     lessonDirectory.querySelector('summary').focus({ preventScroll: true });
   }
@@ -238,7 +238,7 @@ function renderVocabulary(items = []) {
     <article class="vocab-card searchable">
       <div class="vocab-row">
         <button class="vocab-summary" type="button" aria-expanded="false" aria-controls="vocab-detail-${index}">
-          <span><span class="vocab-term">${escapeHtml(item.term)}</span><span class="vocab-zh">${escapeHtml(item.zh)}</span></span>
+          <span><span class="vocab-term">${escapeHtml(item.term)}</span>${item.pronunciation ? `<span class="vocab-ipa">美 · ${item.pronunciation.word === item.term ? '' : escapeHtml(item.pronunciation.word) + ' '}${escapeHtml(item.pronunciation.ipa)}</span>` : ''}<span class="vocab-zh">${escapeHtml(item.zh)}</span></span>
           <span class="vocab-chevron" aria-hidden="true">⌄</span>
         </button>
         ${hasAudio ? `<button class="vocab-audio-btn" type="button" data-audio-index="${index}" aria-label="播放 ${escapeHtml(item.term)} 的美式发音" title="播放美式发音"><span aria-hidden="true">🔊</span></button>` : ''}
