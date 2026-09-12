@@ -971,7 +971,7 @@ a { color: inherit; }
   display: block;
   text-decoration: none;
   padding: 9px 10px;
-  border-radius: 9px;
+  border-radius: 999px;
   min-height: 44px;
   line-height: 1.35;
   font-size: .79rem;
