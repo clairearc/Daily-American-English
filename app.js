@@ -241,7 +241,7 @@ function renderVocabulary(items = []) {
           <span><span class="vocab-term">${escapeHtml(item.term)}</span>${item.pronunciation ? `<span class="vocab-ipa">美 · ${item.pronunciation.word === item.term ? '' : escapeHtml(item.pronunciation.word) + ' '}${escapeHtml(item.pronunciation.ipa)}</span>` : ''}<span class="vocab-zh">${escapeHtml(item.zh)}</span></span>
           <span class="vocab-chevron" aria-hidden="true">⌄</span>
         </button>
-        ${hasAudio ? `<button class="vocab-audio-btn" type="button" data-audio-index="${index}" aria-label="播放 ${escapeHtml(item.term)} 的美式发音" title="播放美式发音"><span aria-hidden="true">🔊</span></button>` : ''}
+        ${hasAudio ? `<button class="vocab-audio-btn" type="button" data-audio-index="${index}" aria-label="播放 ${escapeHtml(item.term)} 的美式发音" title="播放美式发音"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg></button>` : ''}
       </div>
       <div class="vocab-detail" id="vocab-detail-${index}">
         ${item.note ? `<p class="note">${escapeHtml(item.note)}</p>` : ''}
@@ -399,6 +399,16 @@ function escapeHtml(value = '') {
 }
 
 searchInput.addEventListener('input', applySearch);
+const themeToggle = document.querySelector('#themeToggle');
+themeToggle?.addEventListener('click', () => {
+  const current = document.documentElement.getAttribute('data-theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  const next = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('dae-theme', next); } catch (_) {}
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  if (metaTheme) metaTheme.setAttribute('content', next === 'dark' ? '#10151b' : '#f3f5f7');
+});
+
 navToggle?.addEventListener('click', () => document.body.classList.contains('nav-open') ? closeNav() : openNav());
 sidebarClose?.addEventListener('click', closeNav);
 sidebarOverlay?.addEventListener('click', closeNav);

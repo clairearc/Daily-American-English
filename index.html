@@ -7,6 +7,15 @@
   <title>Daily American English</title>
   <link rel="stylesheet" href="styles.css?v=20260912-expand1" />
   <link rel="stylesheet" href="site-v2.css?v=20260912-expand1" />
+  <script>
+    (function(){
+      try {
+        const saved = localStorage.getItem('dae-theme');
+        const theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      } catch(e){}
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#app">跳到课程内容</a>
@@ -30,6 +39,11 @@
         <span class="search-icon" aria-hidden="true">⌕</span>
         <input id="searchInput" type="search" placeholder="搜索单词、表达、场景或中文释义…" autocomplete="off" />
       </label>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="切换明暗模式" title="切换明暗模式">
+        <span class="theme-icon theme-icon-sun" aria-hidden="true">☀️</span>
+        <span class="theme-icon theme-icon-moon" aria-hidden="true">🌙</span>
+        <span class="theme-label">明暗</span>
+      </button>
     </section>
 
     <div class="course-layout">
