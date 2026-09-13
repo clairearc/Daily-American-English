@@ -735,10 +735,13 @@ a { color: inherit; }
   transition: all .16s ease;
 }
 .page-edge-nav button:hover, .page-edge-nav button:focus-visible {
-  background: var(--accent-soft);
+  background: var(--coral-soft);
+  color: var(--coral);
+  border-color: var(--coral);
+  transform: translateY(-2px);
   outline: none;
 }
-.edge-arrow { font-size: 1rem; line-height: 1; }
+.edge-arrow { font-size: 1rem; line-height: 1; color: var(--coral); font-weight: 900; }
 .edge-label { font-size: .78rem; }
 
 .empty, .loading {
@@ -950,6 +953,12 @@ a { color: inherit; }
   color: var(--accent);
   font-size: .85rem;
   font-weight: 800;
+  transition: all .16s ease;
+}
+.lesson-directory summary:hover, .lesson-directory summary:focus-visible {
+  background: var(--coral-soft);
+  color: var(--coral);
+  border-color: var(--coral);
 }
 .lesson-directory summary::-webkit-details-marker { display: none; }
 .lesson-directory nav {
@@ -967,26 +976,53 @@ a { color: inherit; }
 }
 .lesson-directory-title {
   margin: 0 8px 8px;
-  font-size: .8rem;
-  color: var(--muted);
-  font-weight: 700;
+  font-size: .75rem;
+  color: var(--coral);
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 .lesson-directory a {
   display: block;
   text-decoration: none;
-  padding: 9px 10px;
-  border-radius: 999px;
-  min-height: 44px;
+  padding: 8px 10px 8px 12px;
+  border-radius: 8px;
+  border-left: 3.5px solid transparent;
+  min-height: 42px;
   line-height: 1.35;
   font-size: .79rem;
   color: var(--muted);
   transition: all .15s ease;
 }
 .lesson-directory a[hidden] { display: none; }
-.lesson-directory a small { display: block; font-size: .7rem; margin-top: 3px; font-weight: 400; }
-.lesson-directory a:hover, .lesson-directory a[aria-current] {
-  color: var(--accent);
-  background: var(--accent-soft);
+.lesson-directory a span {
+  display: block;
+  font-weight: 800;
+  color: inherit;
+}
+.lesson-directory a small {
+  display: block;
+  font-size: .7rem;
+  margin-top: 2px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.lesson-directory a:hover {
+  color: var(--ink);
+  background: var(--paper-2);
+}
+.lesson-directory a[aria-current] {
+  background: var(--coral-soft);
+  border-left-color: var(--coral);
+  color: var(--coral);
+}
+.lesson-directory a[aria-current] span {
+  color: var(--coral);
+  font-weight: 850;
+}
+.lesson-directory a[aria-current] small {
+  color: var(--ink);
+  font-weight: 600;
 }
 
 @media (min-width: 1100px) {
